@@ -1,0 +1,372 @@
+<!--
+  PORTFOLIO — fichier unique, déployable tel quel (GitHub Pages, Netlify, Vercel…).
+  À PERSONNALISER (cherche le mot "EDIT") :
+    - Ton nom, ta phrase de positionnement
+    - Tes vrais liens (GitHub, LinkedIn, email)
+    - Les projets : titre, description, stack, liens de repo/démo
+  Rien d'autre à installer : ouvre le fichier dans un navigateur pour prévisualiser.
+-->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Amayas Mahmoudi — Data & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:        #0B131D;
+    --surface:   #121E2A;
+    --surface-2: #16242F;
+    --line:      #21323F;
+    --line-soft: #1A2836;
+    --ink:       #EAF1F7;
+    --muted:     #8598A8;
+    --faint:     #5E7284;
+    --signal:    #F5B04C;   /* amber : le signal, utilisé avec parcimonie */
+    --data:      #5EC8D8;   /* cyan  : liens & données */
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body:    "IBM Plex Sans", system-ui, sans-serif;
+    --mono:    "IBM Plex Mono", ui-monospace, monospace;
+    --maxw: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    /* trame "papier millimétré" très discrète, clin d'œil aux schémas de données */
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  a { color: var(--data); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; border-radius: 2px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .eyebrow .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 0 rgba(245,176,76,0.5);
+    animation: pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(245,176,76,0.45); }
+    70%  { box-shadow: 0 0 0 8px rgba(245,176,76,0); }
+    100% { box-shadow: 0 0 0 0 rgba(245,176,76,0); }
+  }
+
+  /* ---------- NAV ---------- */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: blur(8px);
+    background: rgba(11,19,29,0.72);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--mono); font-size: 14px; color: var(--ink); letter-spacing: 0.02em; }
+  .brand b { color: var(--signal); font-weight: 500; }
+  .nav-links { display: flex; gap: 26px; }
+  .nav-links a { font-size: 14px; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  @media (max-width: 620px){ .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero { padding: 84px 0 40px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 22px 0 20px;
+    max-width: 14ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--signal); }
+  .hero p.lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--muted); max-width: 56ch; margin: 0 0 30px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn {
+    font-family: var(--mono); font-size: 14px;
+    padding: 12px 20px; border-radius: 8px;
+    border: 1px solid var(--signal); color: var(--bg); background: var(--signal);
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); background: #ffc264; }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn.ghost:hover { border-color: var(--muted); background: var(--surface); }
+
+  /* ---------- LINEAGE (signature) ---------- */
+  .lineage { margin: 46px 0 8px; }
+  .lineage svg { width: 100%; height: auto; display: block; }
+  .lineage .cap { font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: 0.08em; margin-top: 12px; }
+  .node-box { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
+  .node-box.hot { stroke: var(--signal); }
+  .node-label { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
+  .node-sub   { font-family: var(--mono); font-size: 9.5px; fill: var(--faint); letter-spacing: .05em; }
+  .edge { stroke: var(--line); stroke-width: 1.4; fill: none; }
+  .pulse { fill: var(--signal); }
+  @media (prefers-reduced-motion: reduce){ .pulse { display: none; } .eyebrow .dot { animation: none; } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 64px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 34px; }
+  .sec-head .idx { font-family: var(--mono); font-size: 13px; color: var(--signal); }
+  .sec-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(24px, 4vw, 34px); letter-spacing: -0.01em; margin: 0; }
+
+  .about p { max-width: 62ch; color: #c8d4de; font-size: 18px; }
+  .about strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- STACK ---------- */
+  .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 700px){ .stack-grid { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px 22px 24px;
+  }
+  .panel h3 { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--data); margin: 0 0 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-family: var(--mono); font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; background: var(--surface-2); }
+
+  /* ---------- PROJECTS ---------- */
+  .proj { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; margin-bottom: 18px; }
+  .proj-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line-soft); }
+  .proj-top .num { font-family: var(--mono); color: var(--signal); font-size: 13px; }
+  .proj-top h3 { font-family: var(--display); font-weight: 600; font-size: 21px; margin: 4px 0 0; }
+  .proj-top .status { font-family: var(--mono); font-size: 11px; color: var(--faint); border: 1px solid var(--line); border-radius: 20px; padding: 4px 11px; white-space: nowrap; }
+  .proj-body { padding: 20px 24px 24px; }
+  .proj-body .row { display: grid; grid-template-columns: 92px 1fr; gap: 4px 18px; padding: 7px 0; border-bottom: 1px dashed var(--line-soft); }
+  .proj-body .row:last-of-type { border-bottom: none; }
+  .proj-body .k { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: 0.06em; text-transform: uppercase; padding-top: 2px; }
+  .proj-body .v { color: #c8d4de; }
+  .proj-body .v .tag { font-size: 12px; padding: 3px 8px; }
+  .proj-links { display: flex; gap: 18px; margin-top: 18px; }
+  .proj-links a { font-family: var(--mono); font-size: 13px; }
+  @media (max-width: 560px){ .proj-body .row { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact p { color: var(--muted); max-width: 52ch; }
+  .contact .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .contact .links a { font-family: var(--mono); font-size: 14px; border: 1px solid var(--line); border-radius: 8px; padding: 11px 18px; color: var(--ink); }
+  .contact .links a:hover { border-color: var(--data); text-decoration: none; }
+
+  footer { padding: 40px 0 60px; color: var(--faint); font-family: var(--mono); font-size: 12px; }
+</style>
+
+<header>
+  <div class="wrap nav">
+    <!-- EDIT : initiales / nom court -->
+    <span class="brand"><b>~/</b>amayas.m</span>
+    <nav class="nav-links">
+      <a href="#about">Profil</a>
+      <a href="#stack">Stack</a>
+      <a href="#projects">Projets</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" style="border-top:none;">
+    <span class="eyebrow"><span class="dot"></span>Data &amp; AI Engineer — Google Cloud</span>
+    <!-- EDIT : ta phrase de positionnement -->
+    <h1>Je construis des systèmes fiables où les <em>LLM</em> rencontrent la donnée d'entreprise.</h1>
+    <p class="lede">Data engineer sur GCP. Des pipelines et du warehouse jusqu'aux agents et serveurs MCP branchés sur de la vraie donnée — de l'ingestion à la mise en production.</p>
+    <div class="cta-row">
+      <a class="btn" href="#projects">Voir les projets</a>
+      <!-- EDIT : ton lien GitHub -->
+      <a class="btn ghost" href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+
+    <!-- ===== SIGNATURE : lineage DAG (ingestion → warehouse → agent) ===== -->
+    <div class="lineage" aria-hidden="true">
+      <svg viewBox="0 0 1000 150" role="img">
+        <!-- edges -->
+        <path id="e1" class="edge" d="M170,58 C210,58 210,58 246,58" />
+        <path id="e2" class="edge" d="M378,58 C420,58 420,58 456,58" />
+        <path id="e3" class="edge" d="M588,58 C628,58 628,58 664,58" />
+        <path id="e4" class="edge" d="M812,58 C852,58 852,58 888,58" />
+
+        <!-- nodes -->
+        <g>
+          <rect class="node-box" x="40" y="34" width="130" height="48" rx="9"/>
+          <text class="node-label" x="58" y="56">sources</text>
+          <text class="node-sub"   x="58" y="70">csv · api · logs</text>
+        </g>
+        <g>
+          <rect class="node-box" x="248" y="34" width="130" height="48" rx="9"/>
+          <text class="node-label" x="266" y="56">ingestion</text>
+          <text class="node-sub"   x="266" y="70">python · cloud run</text>
+        </g>
+        <g>
+          <rect class="node-box" x="458" y="34" width="130" height="48" rx="9"/>
+          <text class="node-label" x="476" y="56">warehouse</text>
+          <text class="node-sub"   x="476" y="70">bigquery · dbt</text>
+        </g>
+        <g>
+          <rect class="node-box hot" x="666" y="34" width="146" height="48" rx="9"/>
+          <text class="node-label" x="684" y="56">agent · mcp</text>
+          <text class="node-sub"   x="684" y="70">tools · eval</text>
+        </g>
+        <g>
+          <rect class="node-box" x="890" y="34" width="98" height="48" rx="9"/>
+          <text class="node-label" x="908" y="56">décision</text>
+          <text class="node-sub"   x="908" y="70">insight</text>
+        </g>
+
+        <!-- animated pulses -->
+        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#e1"/></animateMotion></circle>
+        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0.8s"><mpath href="#e2"/></animateMotion></circle>
+        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.6s"><mpath href="#e3"/></animateMotion></circle>
+        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="2.4s"><mpath href="#e4"/></animateMotion></circle>
+      </svg>
+      <div class="cap">// pipeline type : de la donnée brute à une décision, avec un agent au bout de la chaîne</div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="about">
+    <div class="sec-head"><span class="idx">01</span><h2>Profil</h2></div>
+    <!-- EDIT : réécris à ta voix -->
+    <p>J'aime la partie la moins glamour et la plus décisive de la donnée : les <strong>pipelines qui ne cassent pas</strong>, les schémas propres, les coûts maîtrisés. Sur ce socle, je construis aujourd'hui la couche qui manque à la plupart des projets « IA » : des <strong>agents et serveurs MCP fiables</strong>, connectés à de la vraie donnée d'entreprise et évalués sérieusement — pas des démos.</p>
+    <p style="margin-top:16px;">Mon terrain : Google Cloud (BigQuery, Cloud Run, Cloud Storage), Python, dbt, et l'orchestration de bout en bout. Ma conviction : un data engineer qui parle « agent » vaut plus qu'un modèle de plus dans un notebook.</p>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section id="stack">
+    <div class="sec-head"><span class="idx">02</span><h2>Stack</h2></div>
+    <div class="stack-grid">
+      <div class="panel">
+        <h3>Cloud &amp; données</h3>
+        <div class="tags">
+          <span class="tag">GCP</span><span class="tag">BigQuery</span><span class="tag">Cloud Run</span><span class="tag">Cloud Storage</span><span class="tag">Pub/Sub</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Transformation</h3>
+        <div class="tags">
+          <span class="tag">dbt</span><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Airflow</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>IA &amp; agentic</h3>
+        <div class="tags">
+          <span class="tag">MCP</span><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">Vertex AI</span><span class="tag">Évaluation</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Pratiques</h3>
+        <div class="tags">
+          <span class="tag">CI/CD</span><span class="tag">GitHub Actions</span><span class="tag">Docker</span><span class="tag">Monitoring</span><span class="tag">FinOps / coûts</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects">
+    <div class="sec-head"><span class="idx">03</span><h2>Projets</h2></div>
+
+    <!-- PROJET 1 -->
+    <article class="proj">
+      <div class="proj-top">
+        <div>
+          <span class="num">P.01</span>
+          <h3>Agent de diagnostic de pipelines</h3>
+        </div>
+        <span class="status">En construction</span>
+      </div>
+      <div class="proj-body">
+        <div class="row"><span class="k">Problème</span><span class="v">Quand un job de données échoue en prod, trouver la cause prend du temps et de l'expertise.</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Un serveur MCP expose les métadonnées BigQuery, les logs et l'état des workflows. Un agent interroge ces outils, corrèle l'erreur à sa cause probable et propose un correctif — le tout évalué sur des cas réels.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">MCP</span> <span class="tag">BigQuery</span> <span class="tag">LangGraph</span> <span class="tag">Eval</span></span></div>
+        <div class="proj-links">
+          <!-- EDIT : liens -->
+          <a href="https://github.com/" target="_blank" rel="noopener">Repo ↗</a>
+          <a href="#" target="_blank" rel="noopener">Écrit ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJET 2 -->
+    <article class="proj">
+      <div class="proj-top">
+        <div>
+          <span class="num">P.02</span>
+          <h3>Plateforme analytics dbt</h3>
+        </div>
+        <span class="status">Portfolio</span>
+      </div>
+      <div class="proj-body">
+        <div class="row"><span class="k">Problème</span><span class="v">Transformer un jeu de données ouvert brut en modèles métier propres, testés et documentés.</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Projet dbt de bout en bout sur données publiques : couches staging → intermediate → marts, tests génériques et singuliers, doc, lineage, et CI GitHub Actions qui lance <code>dbt build</code> sur chaque PR.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">dbt</span> <span class="tag">BigQuery</span> <span class="tag">SQL</span> <span class="tag">GitHub Actions</span></span></div>
+        <div class="proj-links">
+          <a href="https://github.com/" target="_blank" rel="noopener">Repo ↗</a>
+          <a href="#" target="_blank" rel="noopener">DAG / doc ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJET 3 -->
+    <article class="proj">
+      <div class="proj-top">
+        <div>
+          <span class="num">P.03</span>
+          <h3>Pipeline de génération créative</h3>
+        </div>
+        <span class="status">Serverless</span>
+      </div>
+      <div class="proj-body">
+        <div class="row"><span class="k">Problème</span><span class="v">Produire automatiquement des visuels personnalisés à partir de données produit (prix, offres).</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Pipeline serverless qui lit la donnée, compose des images par template et zones dynamiques, et les publie — déployé et supervisé sur GCP.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">Pillow</span> <span class="tag">Cloud Run</span> <span class="tag">Cloud Storage</span> <span class="tag">BigQuery</span></span></div>
+        <div class="proj-links">
+          <a href="https://github.com/" target="_blank" rel="noopener">Repo ↗</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="contact">
+    <div class="sec-head"><span class="idx">04</span><h2>Contact</h2></div>
+    <p>Ouvert aux échanges autour de la data engineering et des systèmes agentic sur GCP. La meilleure porte d'entrée reste le mail ou GitHub.</p>
+    <div class="links">
+      <!-- EDIT : tes vrais liens -->
+      <a href="mailto:prenom.nom@email.com">prenom.nom@email.com</a>
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  © <span id="yr"></span> Amayas Mahmoudi — conçu et déployé par mes soins.
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
