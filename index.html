@@ -1,11 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 <!--
   PORTFOLIO — Amayas Mahmoudi — fichier unique, déployable tel quel (GitHub Pages / Netlify).
-  Contenu basé sur ton CV. À vérifier / ajuster : les liens GitHub des projets perso,
-  et n'importe quelle formulation que tu veux à ta voix. (Ton téléphone n'est PAS inclus : site public.)
 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Amayas Mahmoudi — Data Engineer & Agentic AI</title>
+<meta name="description" content="Data Engineer & Agentic AI — pipelines GCP/BigQuery, dbt, agents autonomes et serveurs MCP. Île-de-France." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -124,6 +126,8 @@
 
   footer { padding:40px 0 60px; color:var(--faint); font-family:var(--mono); font-size:12px; }
 </style>
+</head>
+<body>
 
 <header>
   <div class="wrap nav">
@@ -230,26 +234,53 @@
 
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.01</span><h3>HealthDataWarehousing</h3></div>
+        <div><span class="num">P.01</span><h3>RAG_Ollama</h3></div>
+        <span class="status">Agentic AI</span>
+      </div>
+      <div class="proj-body">
+        <div class="row"><span class="k">Objectif</span><span class="v">Chatbot RAG fonctionnant 100% en local : aucune API externe, aucune donnée qui quitte la machine — une réponse aux contraintes RGPD et de confidentialité des entreprises.</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Indexation vectorielle des documents avec FAISS, récupération des passages pertinents par similarité, génération contrainte au contexte via llama3.2 (Ollama), interface de chat Streamlit.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">FAISS</span> <span class="tag">Ollama</span> <span class="tag">Streamlit</span></span></div>
+        <div class="proj-links"><a href="https://github.com/amayasmh/RAG_Ollama" target="_blank" rel="noopener">Repo ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-top">
+        <div><span class="num">P.02</span><h3>HealthDataWarehousing</h3></div>
         <span class="status">Data Warehouse</span>
       </div>
       <div class="proj-body">
-        <div class="row"><span class="k">Objectif</span><span class="v">Construire un entrepôt de données autour des passages aux urgences (suspicion de COVID-19) à partir de fichiers sources hétérogènes.</span></div>
-        <div class="row"><span class="k">Approche</span><span class="v">Modélisation d'un schéma analytique, intégration et transformation des données, exploration en notebook.</span></div>
-        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">Jupyter</span> <span class="tag">SQL</span> <span class="tag">Modélisation DWH</span></span></div>
+        <div class="row"><span class="k">Objectif</span><span class="v">Construire un entrepôt de données dimensionnel sur les passages aux urgences COVID-19 (données ouvertes Santé publique France), du fichier brut à la table analytique.</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Pipeline ETL orchestré par un DAG Airflow conteneurisé : extraction et nettoyage pandas, modèle en étoile chargé dans PostgreSQL, notification email et notebook d'analyse.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Airflow</span> <span class="tag">PostgreSQL</span> <span class="tag">Docker</span> <span class="tag">Python</span> <span class="tag">Modélisation DWH</span></span></div>
         <div class="proj-links"><a href="https://github.com/amayasmh/HealthDataWarehousing" target="_blank" rel="noopener">Repo ↗</a></div>
       </div>
     </article>
 
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.02</span><h3>Trieur d'images</h3></div>
-        <span class="status">Utilitaire</span>
+        <div><span class="num">P.03</span><h3>UrbanMobIDF</h3></div>
+        <span class="status">Data Engineering</span>
       </div>
       <div class="proj-body">
-        <div class="row"><span class="k">Objectif</span><span class="v">Trier automatiquement des images selon leur extension.</span></div>
-        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span></span></div>
-        <div class="proj-links"><a href="https://github.com/amayasmh/Trieur_d-images" target="_blank" rel="noopener">Repo ↗</a></div>
+        <div class="row"><span class="k">Objectif</span><span class="v">Optimiser les itinéraires sur le réseau de transport d'Île-de-France à partir des flux GTFS officiels d'Île-de-France Mobilités.</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Ingestion automatisée des données GTFS (rafraîchies 3×/jour), modélisation du réseau en graphe orienté pondéré, calcul de plus court chemin (Dijkstra), app Streamlit avec alertes et calculateur CO2. Déploiement CI/CD sur Azure.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">NetworkX</span> <span class="tag">SQLite</span> <span class="tag">Streamlit</span> <span class="tag">GitHub Actions</span></span></div>
+        <div class="proj-links"><a href="https://github.com/amayasmh/UrbanMobIDF" target="_blank" rel="noopener">Repo ↗</a></div>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-top">
+        <div><span class="num">P.04</span><h3>bank-churn-prediction</h3></div>
+        <span class="status">Machine Learning</span>
+      </div>
+      <div class="proj-body">
+        <div class="row"><span class="k">Objectif</span><span class="v">Prédire quels clients d'une banque risquent de résilier leur carte de crédit, sur un jeu de données fortement déséquilibré (~16% de churners).</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Random Forest avec rééchantillonnage du train, sélection de features par RFECV et optimisation des hyperparamètres orientée recall — 85% des vrais partants détectés, AUC-ROC 0.99.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">scikit-learn</span> <span class="tag">imbalanced-learn</span> <span class="tag">Python</span> <span class="tag">Jupyter</span></span></div>
+        <div class="proj-links"><a href="https://github.com/amayasmh/bank-churn-prediction" target="_blank" rel="noopener">Repo ↗</a></div>
       </div>
     </article>
 
@@ -292,3 +323,5 @@
 </footer>
 
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
