@@ -142,6 +142,16 @@
     background:var(--signal); animation:pulse 2.6s ease-out infinite;
   }
   .chat-fab[data-open="true"] .fab-dot { display:none; }
+  @keyframes fabNudge {
+    0%,100% { transform:rotate(0); }
+    15% { transform:rotate(-9deg) scale(1.06); }
+    30% { transform:rotate(8deg) scale(1.06); }
+    45% { transform:rotate(-5deg); }
+    60% { transform:rotate(4deg); }
+    75% { transform:rotate(0); }
+  }
+  .chat-fab.nudge { animation:fabNudge .8s ease; }
+  @media (prefers-reduced-motion:reduce){ .chat-fab.nudge { animation:none; } }
 
   .chat-teaser {
     position:fixed; right:22px; bottom:90px; z-index:60;
@@ -568,7 +578,7 @@
 
   /* ---------- Ouverture / fermeture ---------- */
   function openPanel(){
-    hideTeaser();
+    stopTeaser();
     panel.classList.add("open");
     fab.dataset.open = "true";
     fab.setAttribute("aria-expanded","true");
@@ -592,7 +602,7 @@
   fab.addEventListener("click", () => panel.classList.contains("open") ? closePanel() : openPanel());
   closeBtn.addEventListener("click", closePanel);
   teaserOpen.addEventListener("click", openPanel);
-  teaserClose.addEventListener("click", (e) => { e.stopPropagation(); hideTeaser(); try { sessionStorage.setItem("faqSeen","1"); } catch(e2){} });
+  teaserClose.addEventListener("click", (e) => { e.stopPropagation(); stopTeaser(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.classList.contains("open")) closePanel(); });
 
   form.addEventListener("submit", (e) => {
@@ -603,12 +613,53 @@
     ask(v, null);
   });
 
-  /* ---------- Teaser après 4 s (une fois par session) ---------- */
-  let seen = false;
-  try { seen = sessionStorage.getItem("faqSeen") === "1"; } catch(e){}
-  if (!seen){
-    setTimeout(() => { if (!opened) teaser.classList.add("show"); }, 4000);
-    setTimeout(() => { if (!opened) hideTeaser(); }, 22000);
+  /* ---------- Teaser récurrent — messages tournants ---------- */
+  /* Réglages : ajuste ces 3 valeurs à ta convenance */
+  const TEASER_FIRST_DELAY = 4000;   // 1re apparition après 4 s
+  const TEASER_SHOW_MS     = 6000;   // chaque message reste affiché 6 s
+  const TEASER_INTERVAL_MS = 12000;  // délai entre deux apparitions
+
+  const TEASER_MSGS = [
+    "Une question sur mon parcours, mes projets ou ma stack ? Posez-la moi.",
+    "Viens discuter 👋 Je réponds en moins d'une seconde.",
+    "Curieux de savoir ce que je fais avec Claude et les serveurs MCP ?",
+    "Besoin d'un data engineer ? Demandez-moi si je suis dispo.",
+    "Psst — je connais ce portfolio par cœur. Testez-moi."
+  ];
+
+  const teaserText = teaserOpen;
+  const teaserTag = teaserOpen.querySelector(".t-tag");
+  let teaserIdx = 0;
+  let teaserStopped = false;
+  let teaserTimer = null;
+
+  try { teaserStopped = sessionStorage.getItem("faqSeen") === "1"; } catch(e){}
+
+  function stopTeaser(){
+    teaserStopped = true;
+    clearTimeout(teaserTimer);
+    hideTeaser();
+    try { sessionStorage.setItem("faqSeen","1"); } catch(e){}
+  }
+
+  function showTeaserCycle(){
+    if (teaserStopped || opened) return;
+    // met à jour le message (en conservant le tag "agent.faq — en ligne")
+    teaserText.innerHTML = "";
+    teaserText.appendChild(teaserTag);
+    teaserText.appendChild(document.createTextNode(TEASER_MSGS[teaserIdx % TEASER_MSGS.length]));
+    teaserIdx++;
+    teaser.classList.add("show");
+    // petit wiggle du bouton pour attirer l'œil
+    fab.classList.remove("nudge"); void fab.offsetWidth; fab.classList.add("nudge");
+    teaserTimer = setTimeout(() => {
+      hideTeaser();
+      teaserTimer = setTimeout(showTeaserCycle, TEASER_INTERVAL_MS);
+    }, TEASER_SHOW_MS);
+  }
+
+  if (!teaserStopped){
+    teaserTimer = setTimeout(showTeaserCycle, TEASER_FIRST_DELAY);
   }
 })();
 </script>
