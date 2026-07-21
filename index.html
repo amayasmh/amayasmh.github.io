@@ -125,6 +125,97 @@
   .contact .langs { font-family:var(--mono); font-size:13px; color:var(--faint); margin-top:20px; }
 
   footer { padding:40px 0 60px; color:var(--faint); font-family:var(--mono); font-size:12px; }
+
+  /* ============ AGENT FAQ — widget de chat ============ */
+  .chat-fab {
+    position:fixed; right:22px; bottom:22px; z-index:60;
+    width:56px; height:56px; border-radius:50%;
+    background:var(--surface); border:1px solid var(--signal);
+    color:var(--signal); font-size:22px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 24px rgba(0,0,0,.45);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .chat-fab:hover { transform:translateY(-2px); background:var(--surface-2); }
+  .chat-fab .fab-dot {
+    position:absolute; top:6px; right:6px; width:9px; height:9px; border-radius:50%;
+    background:var(--signal); animation:pulse 2.6s ease-out infinite;
+  }
+  .chat-fab[data-open="true"] .fab-dot { display:none; }
+
+  .chat-teaser {
+    position:fixed; right:22px; bottom:90px; z-index:60;
+    max-width:270px; background:var(--surface); border:1px solid var(--line);
+    border-radius:12px 12px 2px 12px; padding:13px 34px 13px 15px;
+    font-size:14px; color:#c8d4de; line-height:1.45;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .chat-teaser.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+  .chat-teaser .t-tag { display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--signal); margin-bottom:5px; }
+  .chat-teaser .t-close {
+    position:absolute; top:7px; right:8px; background:none; border:none; cursor:pointer;
+    color:var(--faint); font-size:15px; line-height:1; padding:3px;
+  }
+  .chat-teaser .t-close:hover { color:var(--ink); }
+  .chat-teaser button.t-open { background:none; border:none; padding:0; cursor:pointer; font:inherit; color:inherit; text-align:left; }
+
+  .chat-panel {
+    position:fixed; right:22px; bottom:90px; z-index:70;
+    width:min(380px, calc(100vw - 32px)); height:min(540px, calc(100vh - 130px));
+    background:var(--bg); border:1px solid var(--line); border-radius:14px;
+    display:none; flex-direction:column; overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.6);
+  }
+  .chat-panel.open { display:flex; animation:panelIn .22s ease; }
+  @keyframes panelIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce){ .chat-panel.open { animation:none; } .chat-teaser { transition:none; } .chat-fab .fab-dot { animation:none; } }
+
+  .chat-head {
+    display:flex; align-items:center; gap:10px; padding:13px 16px;
+    background:var(--surface); border-bottom:1px solid var(--line-soft); flex:0 0 auto;
+  }
+  .chat-head .h-dot { width:8px; height:8px; border-radius:50%; background:var(--signal); animation:pulse 2.6s ease-out infinite; }
+  .chat-head .h-title { font-family:var(--mono); font-size:13px; color:var(--ink); }
+  .chat-head .h-title b { color:var(--signal); font-weight:500; }
+  .chat-head .h-sub { font-family:var(--mono); font-size:10.5px; color:var(--faint); margin-left:auto; margin-right:10px; }
+  .chat-head .h-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; padding:4px; }
+  .chat-head .h-close:hover { color:var(--ink); }
+
+  .chat-log { flex:1 1 auto; overflow-y:auto; padding:16px 14px; display:flex; flex-direction:column; gap:10px; }
+  .msg { max-width:86%; padding:10px 13px; border-radius:11px; font-size:14.5px; line-height:1.5; }
+  .msg.bot { align-self:flex-start; background:var(--surface); border:1px solid var(--line); color:#c8d4de; border-radius:11px 11px 11px 3px; }
+  .msg.bot a { color:var(--data); }
+  .msg.user { align-self:flex-end; background:var(--signal); color:var(--bg); border-radius:11px 11px 3px 11px; font-weight:500; }
+  .msg.typing { font-family:var(--mono); color:var(--faint); font-size:13px; }
+
+  .chips { display:flex; flex-wrap:wrap; gap:7px; align-self:flex-start; max-width:96%; }
+  .chip {
+    font-family:var(--mono); font-size:12.5px; color:var(--data);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:18px;
+    padding:6px 12px; cursor:pointer; transition:border-color .15s ease, color .15s ease;
+  }
+  .chip:hover { border-color:var(--data); color:var(--ink); }
+
+  .chat-input { display:flex; gap:8px; padding:12px 14px; border-top:1px solid var(--line-soft); background:var(--surface); flex:0 0 auto; }
+  .chat-input input {
+    flex:1; background:var(--bg); border:1px solid var(--line); border-radius:8px;
+    color:var(--ink); font-family:var(--body); font-size:14.5px; padding:10px 12px; outline:none;
+  }
+  .chat-input input:focus { border-color:var(--data); }
+  .chat-input input::placeholder { color:var(--faint); }
+  .chat-input button {
+    font-family:var(--mono); font-size:13px; padding:0 16px; border-radius:8px;
+    border:1px solid var(--signal); background:var(--signal); color:var(--bg); cursor:pointer;
+  }
+  .chat-input button:hover { background:#ffc264; }
+
+  @media (max-width:560px){
+    .chat-panel { right:16px; left:16px; width:auto; bottom:86px; }
+    .chat-fab { right:16px; bottom:16px; }
+    .chat-teaser { right:16px; bottom:84px; }
+  }
 </style>
 </head>
 <body>
@@ -321,6 +412,206 @@
 <footer class="wrap">
   © <span id="yr"></span> Amayas Mahmoudi — Data Engineer &amp; Agentic AI.
 </footer>
+
+<!-- ============ AGENT FAQ — widget ============ -->
+<div class="chat-teaser" id="chatTeaser" role="status">
+  <button class="t-close" id="teaserClose" aria-label="Fermer l'invitation">✕</button>
+  <button class="t-open" id="teaserOpen">
+    <span class="t-tag">agent.faq — en ligne</span>
+    Une question sur mon parcours, mes projets ou ma stack ? Posez-la moi.
+  </button>
+</div>
+
+<button class="chat-fab" id="chatFab" aria-label="Ouvrir le chat FAQ" aria-expanded="false" data-open="false">
+  <span class="fab-dot"></span>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Chat FAQ" aria-modal="false">
+  <div class="chat-head">
+    <span class="h-dot"></span>
+    <span class="h-title"><b>~/</b>agent.faq</span>
+    <span class="h-sub">scripté · js pur</span>
+    <button class="h-close" id="chatClose" aria-label="Fermer le chat">✕</button>
+  </div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-input" id="chatForm">
+    <input type="text" id="chatText" placeholder="Écrivez votre question…" autocomplete="off" maxlength="200" />
+    <button type="submit">Envoyer</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Base de connaissances ---------- */
+  const FAQ = [
+    {
+      id:"parcours",
+      label:"Quel est ton parcours ?",
+      keywords:["parcours","experience","carriere","orange","agence","79","travail","poste","emploi","annees","background"],
+      answer:"4 ans d'expérience en data engineering. Aujourd'hui <b>Data Engineer & Agentic AI chez Agence 79</b> (pipelines GCP/BigQuery, dbt, agents IA, serveurs MCP). Avant : <b>3 ans et demi chez Orange Business</b>, sur des pipelines de prédiction des délais de déploiement Fibre. Le détail est dans la section <a href='#experience'>Expérience</a>."
+    },
+    {
+      id:"agentic",
+      label:"C'est quoi ton travail sur les agents & MCP ?",
+      keywords:["mcp","agent","agentic","claude","anthropic","llm","ia","autonome","serveur","model","context","protocol"],
+      answer:"Je conçois des <b>agents IA autonomes en Python</b> qui lancent et vérifient des campagnes publicitaires, et un <b>écosystème de serveurs MCP</b> qui connecte Claude (Anthropic) à des workflows, bases SQL et outils internes. Objectif : automatiser les diagnostics complexes et réduire drastiquement le risque d'erreur humaine."
+    },
+    {
+      id:"stack",
+      label:"Quelle est ta stack ?",
+      keywords:["stack","techno","technologie","outil","langage","python","sql","gcp","bigquery","dbt","spark","airflow","docker","cloud","competence","skill"],
+      answer:"Cœur de stack : <b>Python, SQL, GCP (BigQuery), dbt, Airflow, Docker, GitLab CI/CD</b>. Côté IA : serveurs MCP, Claude, Vertex AI. Le panorama complet est dans la section <a href='#stack'>Stack</a>."
+    },
+    {
+      id:"projets",
+      label:"Tu peux me parler de tes projets ?",
+      keywords:["projet","rag","ollama","github","repo","dwh","warehouse","churn","gtfs","perso","code"],
+      answer:"4 projets vitrines : <b>RAG_Ollama</b> (chatbot RAG 100% local), <b>HealthDataWarehousing</b> (DWH Airflow/PostgreSQL), <b>UrbanMobIDF</b> (routage transport IDF sur flux GTFS) et <b>bank-churn-prediction</b> (ML, recall 85%). Tout est sur <a href='https://github.com/amayasmh' target='_blank' rel='noopener'>GitHub</a> ou dans la section <a href='#projects'>Projets</a>."
+    },
+    {
+      id:"dispo",
+      label:"Tu es ouvert aux opportunités ?",
+      keywords:["dispo","disponible","opportunite","recrute","recrutement","embauche","poste","mission","freelance","collaboration","interesse","ouvert"],
+      answer:"Oui — à l'écoute d'opportunités autour de la <b>data engineering et des systèmes agentic</b>. Le plus simple : un mail à <a href='mailto:amayasmah562@gmail.com'>amayasmah562@gmail.com</a> ou un message sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>."
+    },
+    {
+      id:"formation",
+      label:"Quelle formation as-tu suivie ?",
+      keywords:["formation","etude","diplome","master","mastere","licence","ecole","universite","certification","toeic","anglais"],
+      answer:"<b>Mastère Big Data & IA</b> (Sup De Vinci) et <b>Licence Informatique</b> (Université Gustave Eiffel). Certifications : Google Cloud (Data Lakes & Data Warehouses, 2026) et DataCamp Data Engineer Associate (2025). Anglais : TOEIC 800."
+    },
+    {
+      id:"bot",
+      label:"Tu es un vrai agent IA ?",
+      keywords:["bot","vrai","fonctionne","marche","script","comment","fait","construit","toi","es"],
+      answer:"Honnêtement ? Non 🙂 Je suis un <b>agent scripté en JS pur</b> — zéro backend, zéro appel API, tout tourne dans votre navigateur. La version connectée à un vrai LLM via serveur MCP est sur la roadmap. En attendant, les vrais agents qu'Amayas construit tournent en production chez <a href='#experience'>Agence 79</a>."
+    }
+  ];
+
+  const FALLBACK = "Je n'ai pas la réponse à celle-là — je ne suis qu'un agent scripté 🙂 Pour une vraie conversation, écrivez à <a href='mailto:amayasmah562@gmail.com'>amayasmah562@gmail.com</a> ou sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Sinon, essayez une des questions ci-dessous.";
+
+  /* ---------- Éléments ---------- */
+  const fab = document.getElementById("chatFab");
+  const panel = document.getElementById("chatPanel");
+  const log = document.getElementById("chatLog");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("chatText");
+  const teaser = document.getElementById("chatTeaser");
+  const teaserClose = document.getElementById("teaserClose");
+  const teaserOpen = document.getElementById("teaserOpen");
+  const closeBtn = document.getElementById("chatClose");
+
+  let opened = false;
+  let booted = false;
+
+  /* ---------- Rendu ---------- */
+  function addMsg(html, who){
+    const el = document.createElement("div");
+    el.className = "msg " + who;
+    if (who === "user") { el.textContent = html; } else { el.innerHTML = html; }
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function addChips(exclude){
+    const old = log.querySelector(".chips");
+    if (old) old.remove();
+    const wrap = document.createElement("div");
+    wrap.className = "chips";
+    FAQ.filter(f => f.id !== exclude).slice(0, 4).forEach(f => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = f.label;
+      b.addEventListener("click", () => ask(f.label, f));
+      wrap.appendChild(b);
+    });
+    log.appendChild(wrap);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function botReply(html, excludeId){
+    const typing = addMsg("…", "bot typing");
+    const delay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 550;
+    setTimeout(() => {
+      typing.remove();
+      addMsg(html, "bot");
+      addChips(excludeId);
+    }, delay);
+  }
+
+  /* ---------- Matching ---------- */
+  function normalize(s){
+    return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ");
+  }
+  function findAnswer(text){
+    const words = normalize(text).split(/\s+/).filter(w => w.length > 1);
+    let best = null, bestScore = 0;
+    FAQ.forEach(f => {
+      let score = 0;
+      f.keywords.forEach(k => { if (words.some(w => w === k || (k.length > 3 && w.startsWith(k)))) score++; });
+      if (score > bestScore) { bestScore = score; best = f; }
+    });
+    return bestScore > 0 ? best : null;
+  }
+
+  function ask(text, forced){
+    addMsg(text, "user");
+    const hit = forced || findAnswer(text);
+    if (hit) botReply(hit.answer, hit.id);
+    else botReply(FALLBACK, null);
+  }
+
+  /* ---------- Ouverture / fermeture ---------- */
+  function openPanel(){
+    hideTeaser();
+    panel.classList.add("open");
+    fab.dataset.open = "true";
+    fab.setAttribute("aria-expanded","true");
+    opened = true;
+    try { sessionStorage.setItem("faqSeen","1"); } catch(e){}
+    if (!booted){
+      booted = true;
+      addMsg("Bonjour 👋 Je suis l'agent FAQ de ce portfolio. Posez-moi une question, ou choisissez-en une :", "bot");
+      addChips(null);
+    }
+    input.focus();
+  }
+  function closePanel(){
+    panel.classList.remove("open");
+    fab.dataset.open = "false";
+    fab.setAttribute("aria-expanded","false");
+    fab.focus();
+  }
+  function hideTeaser(){ teaser.classList.remove("show"); }
+
+  fab.addEventListener("click", () => panel.classList.contains("open") ? closePanel() : openPanel());
+  closeBtn.addEventListener("click", closePanel);
+  teaserOpen.addEventListener("click", openPanel);
+  teaserClose.addEventListener("click", (e) => { e.stopPropagation(); hideTeaser(); try { sessionStorage.setItem("faqSeen","1"); } catch(e2){} });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.classList.contains("open")) closePanel(); });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const v = input.value.trim();
+    if (!v) return;
+    input.value = "";
+    ask(v, null);
+  });
+
+  /* ---------- Teaser après 4 s (une fois par session) ---------- */
+  let seen = false;
+  try { seen = sessionStorage.getItem("faqSeen") === "1"; } catch(e){}
+  if (!seen){
+    setTimeout(() => { if (!opened) teaser.classList.add("show"); }, 4000);
+    setTimeout(() => { if (!opened) hideTeaser(); }, 22000);
+  }
+})();
+</script>
 
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
