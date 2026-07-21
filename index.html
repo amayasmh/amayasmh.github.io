@@ -193,7 +193,7 @@
   .chat-head .h-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; padding:4px; }
   .chat-head .h-close:hover { color:var(--ink); }
 
-  .chat-log { flex:1 1 auto; overflow-y:auto; padding:16px 14px; display:flex; flex-direction:column; gap:10px; }
+  .chat-log { flex:1 1 auto; overflow-y:auto; padding:16px 14px; display:flex; flex-direction:column; gap:10px; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
   .msg { max-width:86%; padding:10px 13px; border-radius:11px; font-size:14.5px; line-height:1.5; }
   .msg.bot { align-self:flex-start; background:var(--surface); border:1px solid var(--line); color:#c8d4de; border-radius:11px 11px 11px 3px; }
   .msg.bot a { color:var(--data); }
@@ -225,7 +225,10 @@
     .chat-panel { right:16px; left:16px; width:auto; bottom:86px; }
     .chat-fab { right:16px; bottom:16px; }
     .chat-teaser { right:16px; bottom:84px; }
-    body.chat-lock { overflow:hidden; }  /* bloque le scroll de la page quand le chat est ouvert (mobile uniquement) */
+    /* Verrou de scroll compatible Safari iOS : on fige le body, le JS mémorise/restaure la position */
+    body.chat-lock { position:fixed; width:100%; overflow:hidden; }
+    /* iOS zoome automatiquement sur les inputs < 16px : on force 16px sur mobile */
+    .chat-input input { font-size:16px; }
   }
 </style>
 </head>
@@ -578,9 +581,13 @@
   }
 
   /* ---------- Ouverture / fermeture ---------- */
+  let lockedScrollY = 0;
+
   function openPanel(){
     stopTeaser();
     panel.classList.add("open");
+    lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.body.style.top = "-" + lockedScrollY + "px";
     document.body.classList.add("chat-lock");
     fab.dataset.open = "true";
     fab.setAttribute("aria-expanded","true");
@@ -596,6 +603,12 @@
   function closePanel(){
     panel.classList.remove("open");
     document.body.classList.remove("chat-lock");
+    document.body.style.top = "";
+    /* restauration instantanée malgré scroll-behavior:smooth sur <html> */
+    const prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, lockedScrollY);
+    document.documentElement.style.scrollBehavior = prev;
     fab.dataset.open = "false";
     fab.setAttribute("aria-expanded","false");
     fab.focus();
