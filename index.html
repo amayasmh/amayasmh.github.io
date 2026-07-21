@@ -225,6 +225,7 @@
     .chat-panel { right:16px; left:16px; width:auto; bottom:86px; }
     .chat-fab { right:16px; bottom:16px; }
     .chat-teaser { right:16px; bottom:84px; }
+    body.chat-lock { overflow:hidden; }  /* bloque le scroll de la page quand le chat est ouvert (mobile uniquement) */
   }
 </style>
 </head>
@@ -580,6 +581,7 @@
   function openPanel(){
     stopTeaser();
     panel.classList.add("open");
+    document.body.classList.add("chat-lock");
     fab.dataset.open = "true";
     fab.setAttribute("aria-expanded","true");
     opened = true;
@@ -593,6 +595,7 @@
   }
   function closePanel(){
     panel.classList.remove("open");
+    document.body.classList.remove("chat-lock");
     fab.dataset.open = "false";
     fab.setAttribute("aria-expanded","false");
     fab.focus();
@@ -604,6 +607,12 @@
   teaserOpen.addEventListener("click", openPanel);
   teaserClose.addEventListener("click", (e) => { e.stopPropagation(); stopTeaser(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.classList.contains("open")) closePanel(); });
+
+  /* Clic sur un lien interne (#section) dans une réponse → on ferme le chat pour laisser la navigation se faire */
+  log.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (a && a.getAttribute("href") && a.getAttribute("href").startsWith("#")) closePanel();
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
