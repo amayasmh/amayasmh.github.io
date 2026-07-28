@@ -453,7 +453,7 @@
   <div class="chat-head">
     <span class="h-dot"></span>
     <span class="h-title"><b>~/</b>agent.faq</span>
-    <span class="h-sub" data-i18n="chatSub">scripté · js pur</span>
+    <span class="h-sub" data-i18n="chatSub">adk · gemini · cloud run</span>
     <button class="h-close" id="chatClose" aria-label="Fermer le chat">✕</button>
   </div>
   <div class="chat-log" id="chatLog" aria-live="polite"></div>
@@ -519,7 +519,7 @@
     projMore: `All repositories on GitHub ↗`,
     contactP: `Open to new opportunities in data engineering and agentic systems. Email or LinkedIn are the best ways to reach me.`,
     contactLangs: `Languages: French (native) · English (TOEIC 800)`,
-    chatSub: `scripted · pure js`,
+    chatSub: `adk · gemini · cloud run`,
     chatSend: `Send`
   };
 
@@ -570,7 +570,40 @@
 (function(){
   "use strict";
 
-  /* ---------- Base de connaissances ---------- */
+  /* ---------- Agent LLM (Cloud Run) ---------- */
+  const AGENT_ENDPOINT = "https://portfolio-agent-624054726778.europe-west1.run.app/chat";
+
+  function getSessionId(){
+    let id = null;
+    try { id = sessionStorage.getItem("agentSid"); } catch(e){}
+    if (!id) {
+      id = (crypto.randomUUID ? crypto.randomUUID()
+           : "s-" + Date.now() + "-" + Math.random().toString(36).slice(2,10));
+      try { sessionStorage.setItem("agentSid", id); } catch(e){}
+    }
+    return id.replace(/[^a-zA-Z0-9_-]/g,"").slice(0,64);
+  }
+
+  async function askAgent(text){
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 25000);
+    try {
+      const res = await fetch(AGENT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text.slice(0, 500), session_id: getSessionId() }),
+        signal: ctrl.signal
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      if (!data.reply) throw new Error("empty reply");
+      return data.reply;
+    } finally {
+      clearTimeout(t);
+    }
+  }
+
+  /* ---------- Base de connaissances (mode secours) ---------- */
   const FAQ = [
     {
       id:"parcours",
@@ -612,12 +645,12 @@
       id:"bot",
       label:"Tu es un vrai agent IA ?",
       keywords:["bot","vrai","fonctionne","marche","script","comment","fait","construit","toi","es","real","built","fake","how"],
-      answer:"Honnêtement ? Non 🙂 Je suis un <b>agent scripté en JS pur</b> — zéro backend, zéro appel API, tout tourne dans votre navigateur. La version connectée à un vrai LLM via serveur MCP est sur la roadmap. En attendant, les vrais agents qu'Amayas construit tournent en production chez <a href='#experience'>Agence 79</a>."
+      answer:"Oui ! Je suis normalement un <b>vrai agent LLM</b> — Google ADK + Gemini, déployé sur Cloud Run, code public sur <a href='https://github.com/amayasmh/portfolio-agent' target='_blank' rel='noopener'>GitHub</a>. Si vous lisez ceci, l'API ne répond pas et je suis passé en <b>mode secours scripté</b>. Réessayez dans un instant !"
     }
   ];
 
-  const FALLBACK_FR = "Je n'ai pas la réponse à celle-là — je ne suis qu'un agent scripté 🙂 Pour une vraie conversation, écrivez à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Sinon, essayez une des questions ci-dessous.";
-  const FALLBACK_EN = "I don't have an answer to that one — I'm just a scripted agent 🙂 For a real conversation, write to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or reach out on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Otherwise, try one of the questions below.";
+  const FALLBACK_FR = "Mon cerveau LLM ne répond pas (mode secours scripté) et je n'ai pas cette réponse en stock 🙂 Réessayez dans un instant, écrivez à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Sinon, essayez une des questions ci-dessous.";
+  const FALLBACK_EN = "My LLM brain isn't responding (scripted fallback mode) and I don't have that answer in stock 🙂 Try again in a moment, write to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or reach out on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Otherwise, try one of the questions below.";
 
   /* ---------- Traductions EN du FAQ ---------- */
   const FAQ_EN = {
@@ -647,7 +680,7 @@
     },
     bot: {
       label: "Are you a real AI agent?",
-      answer: "Honestly? No 🙂 I'm a <b>scripted agent in pure JS</b> — no backend, no API calls, everything runs in your browser. The version connected to a real LLM through an MCP server is on the roadmap. Meanwhile, the real agents Amayas builds run in production at <a href='#experience'>Agence 79</a>."
+      answer: "Yes! I'm normally a <b>real LLM agent</b> — Google ADK + Gemini, deployed on Cloud Run, code public on <a href='https://github.com/amayasmh/portfolio-agent' target='_blank' rel='noopener'>GitHub</a>. If you're reading this, the API isn't responding and I've switched to <b>scripted fallback mode</b>. Try again in a moment!"
     }
   };
 
@@ -702,17 +735,7 @@
     log.scrollTop = log.scrollHeight;
   }
 
-  function botReply(html, excludeId){
-    const typing = addMsg("…", "bot typing");
-    const delay = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 550;
-    setTimeout(() => {
-      typing.remove();
-      addMsg(html, "bot");
-      addChips(excludeId);
-    }, delay);
-  }
-
-  /* ---------- Matching ---------- */
+  /* ---------- Matching (mode secours) ---------- */
   function normalize(s){
     return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9 ]/g," ");
   }
@@ -727,11 +750,30 @@
     return bestScore > 0 ? best : null;
   }
 
-  function ask(text, forced){
+  async function ask(text, forced){
     addMsg(text, "user");
-    const hit = forced || findAnswer(text);
-    if (hit) botReply(ans(hit), hit.id);
-    else botReply(FB(), null);
+    const typing = addMsg("…", "bot typing");
+    const coldTimer = setTimeout(() => {
+      typing.textContent = L() === "en" ? "waking up the server…" : "réveil du serveur…";
+    }, 4000);
+    try {
+      const reply = await askAgent(text);
+      clearTimeout(coldTimer);
+      typing.remove();
+      // Réponse LLM = texte non maîtrisé → textContent, jamais innerHTML (anti-XSS)
+      const el = document.createElement("div");
+      el.className = "msg bot";
+      el.textContent = reply;
+      log.appendChild(el);
+      log.scrollTop = log.scrollHeight;
+      addChips(null);
+    } catch(e) {
+      clearTimeout(coldTimer);
+      typing.remove();
+      const hit = forced || findAnswer(text);
+      if (hit) { addMsg(ans(hit), "bot"); addChips(hit.id); }
+      else { addMsg(FB(), "bot"); addChips(null); }
+    }
   }
 
   /* ---------- Ouverture / fermeture ---------- */
@@ -801,14 +843,14 @@
 
   const TEASER_MSGS_FR = [
     "Une question sur mon parcours, mes projets ou ma stack ? Posez-la moi.",
-    "Viens discuter 👋 Je réponds en moins d'une seconde.",
+    "Viens discuter 👋 Un vrai agent IA vous répond ici.",
     "Curieux de savoir ce que je fais avec Claude et les serveurs MCP ?",
     "Besoin d'un data engineer ? Demandez-moi si je suis dispo.",
     "Psst — je connais ce portfolio par cœur. Testez-moi."
   ];
   const TEASER_MSGS_EN = [
     "A question about my background, projects or stack? Ask away.",
-    "Come say hi 👋 I reply in under a second.",
+    "Come say hi 👋 A real AI agent answers here.",
     "Curious what I do with Claude and MCP servers?",
     "Need a data engineer? Ask me if I'm available.",
     "Psst — I know this portfolio by heart. Try me."
