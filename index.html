@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Amayas Mahmoudi — Data Engineer & Agentic AI</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2213%22%20fill%3D%22%23121E2A%22/%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2213%22%20fill%3D%22none%22%20stroke%3D%22%2321323F%22%20stroke-width%3D%222%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22monospace%22%20font-size%3D%2236%22%20font-weight%3D%22bold%22%20fill%3D%22%23F5B04C%22%20text-anchor%3D%22middle%22%3E~/%3C/text%3E%3C/svg%3E" />
 <meta name="description" content="Data Engineer & Agentic AI — pipelines GCP/BigQuery, dbt, agents autonomes et serveurs MCP. Île-de-France." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -69,7 +70,7 @@
   .pulse { fill:var(--signal); }
   @media (prefers-reduced-motion:reduce){ .pulse{display:none;} .eyebrow .dot{animation:none;} }
 
-  section { padding:60px 0; border-top:1px solid var(--line-soft); }
+  section { padding:60px 0; }
   .sec-head { display:flex; align-items:baseline; gap:16px; margin-bottom:32px; }
   .sec-head .idx { font-family:var(--mono); font-size:13px; color:var(--signal); }
   .sec-head h2 { font-family:var(--display); font-weight:600; font-size:clamp(24px,4vw,34px); letter-spacing:-.01em; margin:0; }
@@ -98,6 +99,8 @@
 
   /* Projets */
   .proj { border:1px solid var(--line); border-radius:14px; background:var(--surface); overflow:hidden; margin-bottom:18px; }
+  .proj.featured { border-color:var(--signal); }
+  .proj.featured .proj-top .status { color:var(--signal); border-color:var(--signal); }
   .proj-top { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--line-soft); }
   .proj-top .num { font-family:var(--mono); color:var(--signal); font-size:13px; }
   .proj-top h3 { font-family:var(--display); font-weight:600; font-size:21px; margin:4px 0 0; }
@@ -256,7 +259,7 @@
 <main class="wrap">
 
   <!-- HERO -->
-  <section class="hero" style="border-top:none;">
+  <section class="hero">
     <span class="eyebrow" data-i18n="eyebrow"><span class="dot"></span>Data Engineer &amp; Agentic AI — 4 ans d'expérience — Île-de-France</span>
     <h1 data-i18n="heroH1">Je construis des systèmes fiables où les <em>agents IA</em> rencontrent la donnée d'entreprise.</h1>
     <p class="lede" data-i18n="heroLede">Data engineer spécialisé dans l'industrialisation de pipelines et la modélisation d'entrepôts cloud sur GCP. Aujourd'hui, je déploie des agents autonomes et des serveurs MCP qui connectent Claude à des workflows, bases SQL et outils internes — de l'ingestion jusqu'à la production.</p>
@@ -343,9 +346,22 @@
   <section id="projects">
     <div class="sec-head"><span class="idx">04</span><h2 data-i18n="projH2">Projets personnels</h2></div>
 
+    <article class="proj featured">
+      <div class="proj-top">
+        <div><span class="num">P.01</span><h3>portfolio-agent</h3></div>
+        <span class="status">Agentic AI · Live</span>
+      </div>
+      <div class="proj-body" data-i18n="projAgentBody">
+        <div class="row"><span class="k">Objectif</span><span class="v">L'agent conversationnel de ce portfolio — celui qui vous répond dans le widget en bas à droite. Un vrai agent LLM en production, que n'importe quel visiteur peut tester (et essayer de piéger).</span></div>
+        <div class="row"><span class="k">Approche</span><span class="v">Agent Google ADK (Gemini) exposé via une API FastAPI sur Cloud Run (scale-to-zero) : CORS restreint, rate limiting, cascade de modèles en cas de quota épuisé, tool GitHub en temps réel, et fallback scripté côté widget. Guardrails testés contre les prompt injections — le system prompt est public par design.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Google ADK</span> <span class="tag">Gemini</span> <span class="tag">FastAPI</span> <span class="tag">Cloud Run</span> <span class="tag">Docker</span></span></div>
+        <div class="proj-links"><a href="https://github.com/amayasmh/portfolio-agent" target="_blank" rel="noopener">Repo ↗</a> <a href="#" onclick="document.getElementById('chatFab').click();return false;">Testez-le ici même ↓</a></div>
+      </div>
+    </article>
+
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.01</span><h3>RAG_Ollama</h3></div>
+        <div><span class="num">P.02</span><h3>RAG_Ollama</h3></div>
         <span class="status">Agentic AI</span>
       </div>
       <div class="proj-body" data-i18n="proj1Body">
@@ -358,7 +374,7 @@
 
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.02</span><h3>HealthDataWarehousing</h3></div>
+        <div><span class="num">P.03</span><h3>HealthDataWarehousing</h3></div>
         <span class="status">Data Warehouse</span>
       </div>
       <div class="proj-body" data-i18n="proj2Body">
@@ -371,7 +387,7 @@
 
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.03</span><h3>UrbanMobIDF</h3></div>
+        <div><span class="num">P.04</span><h3>UrbanMobIDF</h3></div>
         <span class="status">Data Engineering</span>
       </div>
       <div class="proj-body" data-i18n="proj3Body">
@@ -384,7 +400,7 @@
 
     <article class="proj">
       <div class="proj-top">
-        <div><span class="num">P.04</span><h3>bank-churn-prediction</h3></div>
+        <div><span class="num">P.05</span><h3>bank-churn-prediction</h3></div>
         <span class="status">Machine Learning</span>
       </div>
       <div class="proj-body" data-i18n="proj4Body">
@@ -418,7 +434,7 @@
   <!-- CONTACT -->
   <section id="contact" class="contact">
     <div class="sec-head"><span class="idx">06</span><h2>Contact</h2></div>
-    <p data-i18n="contactP">À l'écoute de nouvelles opportunités autour de la data engineering et des systèmes agentic. Le mail ou LinkedIn sont les meilleures portes d'entrée.</p>
+    <p data-i18n="contactP">Envie d'échanger sur la data, les agents IA ou l'un de mes projets ? Le mail ou LinkedIn sont les meilleures portes d'entrée.</p>
     <div class="links">
       <a href="mailto:contact@amayas.dev">contact@amayas.dev</a>
       <a href="https://www.linkedin.com/in/amayas-mhd" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -438,7 +454,7 @@
   <button class="t-close" id="teaserClose" aria-label="Fermer l'invitation">✕</button>
   <button class="t-open" id="teaserOpen">
     <span class="t-tag">agent.faq — en ligne</span>
-    Une question sur mon parcours, mes projets ou ma stack ? Posez-la moi.
+    Une question sur le parcours, les projets ou la stack d'Amayas ? Posez-la moi.
   </button>
 </div>
 
@@ -500,6 +516,10 @@
     exp3Ul: `<li>Python / SQL scripts and Dataiku flows to prepare, clean and improve the reliability of operational datasets.</li>
         <li>First hands-on experience with data modeling and integrating algorithmic components into business workflows.</li>`,
     projH2: `Personal projects`,
+    projAgentBody: `<div class="row"><span class="k">Goal</span><span class="v">This portfolio's conversational agent — the one answering you in the widget at the bottom right. A real LLM agent in production, that any visitor can test (and try to trick).</span></div>
+        <div class="row"><span class="k">Approach</span><span class="v">Google ADK agent (Gemini) exposed through a FastAPI service on Cloud Run (scale-to-zero): restricted CORS, rate limiting, model cascade on quota exhaustion, live GitHub tool, and a scripted fallback in the widget. Guardrails tested against prompt injections — the system prompt is public by design.</span></div>
+        <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Google ADK</span> <span class="tag">Gemini</span> <span class="tag">FastAPI</span> <span class="tag">Cloud Run</span> <span class="tag">Docker</span></span></div>
+        <div class="proj-links"><a href="https://github.com/amayasmh/portfolio-agent" target="_blank" rel="noopener">Repo ↗</a> <a href="#" onclick="document.getElementById('chatFab').click();return false;">Try it right here ↓</a></div>`,
     proj1Body: `<div class="row"><span class="k">Goal</span><span class="v">A RAG chatbot running 100% locally: no external API, no data ever leaves the machine — an answer to corporate GDPR and confidentiality constraints.</span></div>
         <div class="row"><span class="k">Approach</span><span class="v">Vector indexing of documents with FAISS, similarity-based retrieval of relevant passages, context-constrained generation via llama3.2 (Ollama), Streamlit chat interface.</span></div>
         <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">Python</span> <span class="tag">FAISS</span> <span class="tag">Ollama</span> <span class="tag">Streamlit</span></span></div>
@@ -517,7 +537,7 @@
         <div class="row"><span class="k">Stack</span><span class="v"><span class="tag">scikit-learn</span> <span class="tag">imbalanced-learn</span> <span class="tag">Python</span> <span class="tag">Jupyter</span></span></div>
         <div class="proj-links"><a href="https://github.com/amayasmh/bank-churn-prediction" target="_blank" rel="noopener">Repo ↗</a></div>`,
     projMore: `All repositories on GitHub ↗`,
-    contactP: `Open to new opportunities in data engineering and agentic systems. Email or LinkedIn are the best ways to reach me.`,
+    contactP: `Want to talk data, AI agents, or one of my projects? Email or LinkedIn are the best ways to reach me.`,
     contactLangs: `Languages: French (native) · English (TOEIC 800)`,
     chatSub: `adk · gemini · cloud run`,
     chatSend: `Send`
@@ -607,39 +627,39 @@
   const FAQ = [
     {
       id:"parcours",
-      label:"Quel est ton parcours ?",
+      label:"Quel est son parcours ?",
       keywords:["parcours","experience","carriere","orange","agence","79","travail","poste","emploi","annees","background","career","journey","work","years"],
-      answer:"4 ans d'expérience en data engineering. Aujourd'hui <b>Data Engineer & Agentic AI chez Agence 79</b> (pipelines GCP/BigQuery, dbt, agents IA, serveurs MCP). Avant : <b>3 ans et demi chez Orange Business</b>, sur des pipelines de prédiction des délais de déploiement Fibre. Le détail est dans la section <a href='#experience'>Expérience</a>."
+      answer:"Amayas a 4 ans d'expérience en data engineering. Aujourd'hui <b>Data Engineer & Agentic AI chez Agence 79</b> (pipelines GCP/BigQuery, dbt, agents IA, serveurs MCP). Avant : <b>3 ans et demi chez Orange Business</b>, sur des pipelines de prédiction des délais de déploiement Fibre. Le détail est dans la section <a href='#experience'>Expérience</a>."
     },
     {
       id:"agentic",
-      label:"C'est quoi ton travail sur les agents & MCP ?",
+      label:"C'est quoi son travail sur les agents & MCP ?",
       keywords:["mcp","agent","agentic","claude","anthropic","llm","ia","autonome","serveur","server","model","context","protocol"],
-      answer:"Je conçois des <b>agents IA autonomes en Python</b> qui lancent et vérifient des campagnes publicitaires, et un <b>écosystème de serveurs MCP</b> qui connecte Claude (Anthropic) à des workflows, bases SQL et outils internes. Objectif : automatiser les diagnostics complexes et réduire drastiquement le risque d'erreur humaine."
+      answer:"Il conçoit des <b>agents IA autonomes en Python</b> qui lancent et vérifient des campagnes publicitaires, et un <b>écosystème de serveurs MCP</b> qui connecte Claude (Anthropic) à des workflows, bases SQL et outils internes. Objectif : automatiser les diagnostics complexes et réduire drastiquement le risque d'erreur humaine."
     },
     {
       id:"stack",
-      label:"Quelle est ta stack ?",
+      label:"Quelle est sa stack ?",
       keywords:["stack","techno","technologie","outil","langage","python","sql","gcp","bigquery","dbt","spark","airflow","docker","cloud","competence","skill","tool","tools","tech"],
-      answer:"Cœur de stack : <b>Python, SQL, GCP (BigQuery), dbt, Airflow, Docker, GitLab CI/CD</b>. Côté IA : serveurs MCP, Claude, Vertex AI. Le panorama complet est dans la section <a href='#stack'>Stack</a>."
+      answer:"Son cœur de stack : <b>Python, SQL, GCP (BigQuery), dbt, Airflow, Docker, GitLab CI/CD</b>. Côté IA : serveurs MCP, Claude, Vertex AI. Le panorama complet est dans la section <a href='#stack'>Stack</a>."
     },
     {
       id:"projets",
-      label:"Tu peux me parler de tes projets ?",
+      label:"Parle-moi de ses projets",
       keywords:["projet","rag","ollama","github","repo","dwh","warehouse","churn","gtfs","perso","code","project"],
-      answer:"4 projets vitrines : <b>RAG_Ollama</b> (chatbot RAG 100% local), <b>HealthDataWarehousing</b> (DWH Airflow/PostgreSQL), <b>UrbanMobIDF</b> (routage transport IDF sur flux GTFS) et <b>bank-churn-prediction</b> (ML, recall 85%). Tout est sur <a href='https://github.com/amayasmh' target='_blank' rel='noopener'>GitHub</a> ou dans la section <a href='#projects'>Projets</a>."
+      answer:"Le projet phare : <b>portfolio-agent</b> — moi-même 🙂 (agent ADK/Gemini sur Cloud Run). Aussi : <b>RAG_Ollama</b> (chatbot RAG 100% local), <b>HealthDataWarehousing</b> (DWH Airflow/PostgreSQL), <b>UrbanMobIDF</b> (routage transport IDF) et <b>bank-churn-prediction</b> (ML, recall 85%). Tout est sur <a href='https://github.com/amayasmh' target='_blank' rel='noopener'>GitHub</a> ou dans la section <a href='#projects'>Projets</a>."
     },
     {
       id:"dispo",
-      label:"Tu es ouvert aux opportunités ?",
+      label:"Comment le contacter ?",
       keywords:["dispo","disponible","opportunite","recrute","recrutement","embauche","poste","mission","freelance","collaboration","interesse","ouvert","available","opportunit","hiring","job","open"],
-      answer:"Oui — à l'écoute d'opportunités autour de la <b>data engineering et des systèmes agentic</b>. Le plus simple : un mail à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou un message sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>."
+      answer:"Le plus simple : un mail à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou un message sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Amayas échange volontiers autour de la <b>data, des agents IA</b> ou de ses projets."
     },
     {
       id:"formation",
-      label:"Quelle formation as-tu suivie ?",
+      label:"Quelle formation a-t-il suivie ?",
       keywords:["formation","etude","diplome","master","mastere","licence","ecole","universite","universit","certification","toeic","anglais","education","degree","study","school","english"],
-      answer:"<b>Mastère Big Data & IA</b> (Sup De Vinci) et <b>Licence Informatique</b> (Université Gustave Eiffel). Certifications : Google Cloud (Data Lakes & Data Warehouses, 2026) et DataCamp Data Engineer Associate (2025). Anglais : TOEIC 800."
+      answer:"Il a un <b>Mastère Big Data & IA</b> (Sup De Vinci) et une <b>Licence Informatique</b> (Université Gustave Eiffel). Certifications : Google Cloud (Data Lakes & Data Warehouses, 2026) et DataCamp Data Engineer Associate (2025). Anglais : TOEIC 800."
     },
     {
       id:"bot",
@@ -655,28 +675,28 @@
   /* ---------- Traductions EN du FAQ ---------- */
   const FAQ_EN = {
     parcours: {
-      label: "What's your background?",
-      answer: "4 years of experience in data engineering. Currently <b>Data Engineer & Agentic AI at Agence 79</b> (GCP/BigQuery pipelines, dbt, AI agents, MCP servers). Before that: <b>3.5 years at Orange Business</b>, building pipelines to predict fiber deployment lead times. Full details in the <a href='#experience'>Experience</a> section."
+      label: "What's his background?",
+      answer: "Amayas has 4 years of experience in data engineering. Currently <b>Data Engineer & Agentic AI at Agence 79</b> (GCP/BigQuery pipelines, dbt, AI agents, MCP servers). Before that: <b>3.5 years at Orange Business</b>, building pipelines to predict fiber deployment lead times. Full details in the <a href='#experience'>Experience</a> section."
     },
     agentic: {
-      label: "What about your work on agents & MCP?",
-      answer: "I design <b>autonomous AI agents in Python</b> that launch and verify advertising campaigns, and an <b>ecosystem of MCP servers</b> connecting Claude (Anthropic) to workflows, SQL databases and internal tools. The goal: automating complex diagnostics and drastically reducing the risk of human error."
+      label: "What about his work on agents & MCP?",
+      answer: "He designs <b>autonomous AI agents in Python</b> that launch and verify advertising campaigns, and an <b>ecosystem of MCP servers</b> connecting Claude (Anthropic) to workflows, SQL databases and internal tools. The goal: automating complex diagnostics and drastically reducing the risk of human error."
     },
     stack: {
-      label: "What's your stack?",
-      answer: "Core stack: <b>Python, SQL, GCP (BigQuery), dbt, Airflow, Docker, GitLab CI/CD</b>. On the AI side: MCP servers, Claude, Vertex AI. The full picture is in the <a href='#stack'>Stack</a> section."
+      label: "What's his stack?",
+      answer: "His core stack: <b>Python, SQL, GCP (BigQuery), dbt, Airflow, Docker, GitLab CI/CD</b>. On the AI side: MCP servers, Claude, Vertex AI. The full picture is in the <a href='#stack'>Stack</a> section."
     },
     projets: {
-      label: "Can you tell me about your projects?",
-      answer: "4 showcase projects: <b>RAG_Ollama</b> (100% local RAG chatbot), <b>HealthDataWarehousing</b> (Airflow/PostgreSQL DWH), <b>UrbanMobIDF</b> (Paris-region transit routing on GTFS feeds) and <b>bank-churn-prediction</b> (ML, 85% recall). Everything is on <a href='https://github.com/amayasmh' target='_blank' rel='noopener'>GitHub</a> or in the <a href='#projects'>Projects</a> section."
+      label: "Tell me about his projects",
+      answer: "The flagship: <b>portfolio-agent</b> — that's me 🙂 (ADK/Gemini agent on Cloud Run). Also: <b>RAG_Ollama</b> (100% local RAG chatbot), <b>HealthDataWarehousing</b> (Airflow/PostgreSQL DWH), <b>UrbanMobIDF</b> (Paris-region transit routing) and <b>bank-churn-prediction</b> (ML, 85% recall). Everything is on <a href='https://github.com/amayasmh' target='_blank' rel='noopener'>GitHub</a> or in the <a href='#projects'>Projects</a> section."
     },
     dispo: {
-      label: "Are you open to opportunities?",
-      answer: "Yes — open to opportunities in <b>data engineering and agentic systems</b>. Easiest way: an email to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or a message on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>."
+      label: "How can I reach him?",
+      answer: "Easiest way: an email to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or a message on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Amayas is always happy to talk <b>data, AI agents</b> or his projects."
     },
     formation: {
-      label: "What's your education?",
-      answer: "<b>Master's degree in Big Data & AI</b> (Sup De Vinci) and a <b>Bachelor's in Computer Science</b> (Université Gustave Eiffel). Certifications: Google Cloud (Data Lakes & Data Warehouses, 2026) and DataCamp Data Engineer Associate (2025). English: TOEIC 800."
+      label: "What's his education?",
+      answer: "He holds a <b>Master's degree in Big Data & AI</b> (Sup De Vinci) and a <b>Bachelor's in Computer Science</b> (Université Gustave Eiffel). Certifications: Google Cloud (Data Lakes & Data Warehouses, 2026) and DataCamp Data Engineer Associate (2025). English: TOEIC 800."
     },
     bot: {
       label: "Are you a real AI agent?",
@@ -690,8 +710,8 @@
   const ans = f => (L() === "en" && FAQ_EN[f.id] ? FAQ_EN[f.id].answer : f.answer);
   const FB = () => (L() === "en" ? FALLBACK_EN : FALLBACK_FR);
   const WELCOME = {
-    fr: "Bonjour 👋 Je suis l'agent FAQ de ce portfolio. Posez-moi une question, ou choisissez-en une :",
-    en: "Hi 👋 I'm this portfolio's FAQ agent. Ask me a question, or pick one below:"
+    fr: "Bonjour 👋 Je suis l'agent IA du portfolio d'Amayas. Posez-moi une question sur lui — ou choisissez-en une :",
+    en: "Hi 👋 I'm the AI agent of Amayas's portfolio. Ask me anything about him — or pick a question below:"
   };
 
   /* ---------- Éléments ---------- */
@@ -842,17 +862,17 @@
   const TEASER_INTERVAL_MS = 12000;  // délai entre deux apparitions
 
   const TEASER_MSGS_FR = [
-    "Une question sur mon parcours, mes projets ou ma stack ? Posez-la moi.",
+    "Une question sur le parcours, les projets ou la stack d'Amayas ? Posez-la moi.",
     "Viens discuter 👋 Un vrai agent IA vous répond ici.",
-    "Curieux de savoir ce que je fais avec Claude et les serveurs MCP ?",
-    "Besoin d'un data engineer ? Demandez-moi si je suis dispo.",
+    "Curieux de savoir ce qu'Amayas construit avec Claude et les serveurs MCP ?",
+    "Envie de parler data ou agents IA ? Demandez-moi comment le contacter.",
     "Psst — je connais ce portfolio par cœur. Testez-moi."
   ];
   const TEASER_MSGS_EN = [
-    "A question about my background, projects or stack? Ask away.",
+    "A question about Amayas's background, projects or stack? Ask away.",
     "Come say hi 👋 A real AI agent answers here.",
-    "Curious what I do with Claude and MCP servers?",
-    "Need a data engineer? Ask me if I'm available.",
+    "Curious what Amayas builds with Claude and MCP servers?",
+    "Want to talk data or AI agents? Ask me how to reach him.",
     "Psst — I know this portfolio by heart. Try me."
   ];
   const teaserMsgs = () => (L() === "en" ? TEASER_MSGS_EN : TEASER_MSGS_FR);
