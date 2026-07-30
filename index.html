@@ -611,7 +611,7 @@
       const res = await fetch(AGENT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text.slice(0, 500), session_id: getSessionId() }),
+        body: JSON.stringify({ message: text.slice(0, 500), session_id: getSessionId(), lang: (window.__lang === "en" ? "en" : "fr") }),
         signal: ctrl.signal
       });
       if (!res.ok) throw new Error("HTTP " + res.status);
