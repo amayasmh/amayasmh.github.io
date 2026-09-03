@@ -274,15 +274,20 @@
         <path id="e2" class="edge" d="M378,58 C420,58 420,58 456,58" />
         <path id="e3" class="edge" d="M588,58 C628,58 628,58 664,58" />
         <path id="e4" class="edge" d="M812,58 C852,58 852,58 888,58" />
-        <g><rect class="node-box" x="40" y="34" width="130" height="48" rx="9"/><text class="node-label" x="58" y="56">sources</text><text class="node-sub" x="58" y="70">api · sql · logs</text></g>
-        <g><rect class="node-box" x="248" y="34" width="130" height="48" rx="9"/><text class="node-label" x="266" y="56">ingestion</text><text class="node-sub" x="266" y="70">python · gcp</text></g>
-        <g><rect class="node-box" x="458" y="34" width="130" height="48" rx="9"/><text class="node-label" x="476" y="56">warehouse</text><text class="node-sub" x="476" y="70">bigquery · dbt</text></g>
-        <g><rect class="node-box hot" x="666" y="34" width="146" height="48" rx="9"/><text class="node-label" x="684" y="56">agent · mcp</text><text class="node-sub" x="684" y="70">claude · tools</text></g>
-        <g><rect class="node-box" x="890" y="34" width="98" height="48" rx="9"/><text class="node-label" x="908" y="56">action</text><text class="node-sub" x="908" y="70">décision</text></g>
-        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0s"><mpath href="#e1"/></animateMotion></circle>
-        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="0.8s"><mpath href="#e2"/></animateMotion></circle>
-        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="1.6s"><mpath href="#e3"/></animateMotion></circle>
-        <circle class="pulse" r="3.5"><animateMotion dur="3.2s" repeatCount="indefinite" begin="2.4s"><mpath href="#e4"/></animateMotion></circle>
+        <path id="flow" d="M40,58 L988,58" fill="none" stroke="none" />
+        <g><rect class="node-box" x="40" y="34" width="130" height="48" rx="9"><animate attributeName="stroke" dur="10s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.137;0.16;1" values="#F5B04C;#F5B04C;#21323F;#21323F"/></rect><text class="node-label" x="58" y="56">sources</text><text class="node-sub" x="58" y="70">api · sql · logs</text></g>
+        <g><rect class="node-box" x="248" y="34" width="130" height="48" rx="9"><animate attributeName="stroke" dur="10s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.20;0.219;0.357;0.38;1" values="#21323F;#21323F;#F5B04C;#F5B04C;#21323F;#21323F"/></rect><text class="node-label" x="266" y="56">ingestion</text><text class="node-sub" x="266" y="70">python · gcp</text></g>
+        <g><rect class="node-box" x="458" y="34" width="130" height="48" rx="9"><animate attributeName="stroke" dur="10s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.42;0.441;0.578;0.60;1" values="#21323F;#21323F;#F5B04C;#F5B04C;#21323F;#21323F"/></rect><text class="node-label" x="476" y="56">warehouse</text><text class="node-sub" x="476" y="70">bigquery · dbt</text></g>
+        <g><rect class="node-box" x="666" y="34" width="146" height="48" rx="9"><animate attributeName="stroke" dur="10s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.63;0.66;0.82;0.84;1" values="#21323F;#21323F;#F5B04C;#F5B04C;#21323F;#21323F"/></rect><text class="node-label" x="684" y="56">agent · mcp</text><text class="node-sub" x="684" y="70">claude · tools</text></g>
+        <g><rect class="node-box" x="890" y="34" width="98" height="48" rx="9"><animate attributeName="stroke" dur="10s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.88;0.897;1" values="#21323F;#21323F;#F5B04C;#F5B04C"/></rect><text class="node-label" x="908" y="56">action</text><text class="node-sub" x="908" y="70">décision</text></g>
+        <circle class="pulse" r="4" opacity="0">
+          <animateMotion dur="10s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1" keyTimes="0;1">
+            <mpath href="#flow"/>
+          </animateMotion>
+          <animate attributeName="opacity" dur="10s" repeatCount="indefinite" calcMode="discrete"
+            keyTimes="0;0.137;0.219;0.357;0.441;0.578;0.660;0.814;0.897;1"
+            values="0;1;0;1;0;1;0;1;0;0"/>
+        </circle>
       </svg>
       <div class="cap" data-i18n="heroCap">// de la donnée brute à une action automatisée, avec un agent au bout de la chaîne</div>
     </div>
@@ -366,14 +371,11 @@
   <section id="stack">
     <div class="sec-head"><span class="idx">04</span><h2>Stack</h2></div>
     <div class="stack-grid">
-      <div class="panel"><h3 data-i18n="stackLang">Langages</h3><div class="tags"><span class="tag">Python</span><span class="tag">PySpark</span><span class="tag">Pandas</span><span class="tag">SQL</span><span class="tag">Scala</span></div></div>
-      <div class="panel"><h3>Data &amp; orchestration</h3><div class="tags"><span class="tag">Spark</span><span class="tag">Kafka</span><span class="tag">Hadoop / HDFS</span><span class="tag">dbt</span><span class="tag">Dataiku</span><span class="tag">Airflow</span></div></div>
-      <div class="panel"><h3 data-i18n="stackCloud">Cloud &amp; bases</h3><div class="tags"><span class="tag">BigQuery</span><span class="tag">GCP</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Elasticsearch</span></div></div>
-      <div class="panel"><h3 data-i18n="stackIA">IA &amp; agentic</h3><div class="tags"><span class="tag">Serveurs MCP</span><span class="tag">Claude (Anthropic)</span><span class="tag">Vertex AI</span><span class="tag">NLP</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span></div></div>
-      <div class="panel"><h3>DevOps &amp; CI/CD</h3><div class="tags"><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">GitLab</span><span class="tag">GitHub</span><span class="tag">Ansible</span></div></div>
-      <div class="panel"><h3 data-i18n="stackVisu">Visualisation</h3><div class="tags"><span class="tag">Power BI</span><span class="tag">Tableau</span></div></div>
+      <div class="panel"><h3 data-i18n="stackProd">En production · Agence 79</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">GCP</span><span class="tag">BigQuery</span><span class="tag">dbt</span><span class="tag">Cloud Workflows</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">GitLab</span><span class="tag">Serveurs MCP</span><span class="tag">Claude (Anthropic)</span><span class="tag">Google ADK</span><span class="tag">Agent Platform (Vertex AI)</span></div></div>
+      <div class="panel"><h3 data-i18n="stackTools">Aussi dans ma boîte à outils</h3><div class="tags"><span class="tag">PySpark</span><span class="tag">Spark</span><span class="tag">Kafka</span><span class="tag">Hadoop / HDFS</span><span class="tag">Scala</span><span class="tag">Dataiku</span><span class="tag">Airflow</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Elasticsearch</span><span class="tag">NLP</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">GitHub</span><span class="tag">Ansible</span></div></div>
     </div>
   </section>
+
 
   <!-- CONTACT -->
   <section id="contact" class="contact">
@@ -440,10 +442,8 @@
     aboutH2: `How I work`,
     aboutP1: `My rule of thumb: a system that isn't in production doesn't exist. I favor <strong>simple, tested, documented</strong> solutions (systematic CI/CD, verified data quality, controlled costs) over sophistication for its own sake.`,
     aboutP2: `And because a tool only matters if it gets adopted, I work with <strong>business teams</strong> day to day: clear documentation, training, iterating on their feedback. The most concrete proof of this approach: this portfolio's AI agent, live in the widget at the bottom right.`,
-    stackLang: `Languages`,
-    stackCloud: `Cloud &amp; databases`,
-    stackIA: `AI &amp; agentic`,
-    stackVisu: `Visualization`,
+    stackProd: `In production · Agence 79`,
+    stackTools: `Also in my toolbox`,
     expH2: `Experience`,
     exp1Meta: `<h3>Data Engineer &amp; Agentic AI · <span class="co">Agence 79</span></h3><span class="when">Jan. 2026 → Present</span>`,
     exp1Ul: `<li>Data pipelines and automated workflows on GCP, dedicated to automating client advertising campaigns.</li>
