@@ -227,12 +227,12 @@
   .chat-head {
     display:flex; align-items:center; gap:10px; padding:13px 16px;
     background:var(--surface); border-bottom:1px solid var(--line-soft); flex:0 0 auto;
+    cursor:pointer;
   }
   .chat-head .h-dot { width:8px; height:8px; border-radius:50%; background:var(--signal); animation:pulse 2.6s ease-out infinite; }
   .chat-head .h-title { font-family:var(--mono); font-size:13px; color:var(--ink); }
   .chat-head .h-title b { color:var(--signal); font-weight:500; }
-  .chat-head .h-sub { font-family:var(--mono); font-size:10.5px; color:var(--faint); margin-left:auto; margin-right:10px; }
-  .chat-head .h-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; padding:4px; }
+  .chat-head .h-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:18px; line-height:1; padding:4px; margin-left:auto; }
   .chat-head .h-close:hover { color:var(--ink); }
 
   .chat-log { flex:1 1 auto; overflow-y:auto; padding:16px 14px; display:flex; flex-direction:column; gap:10px; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
@@ -506,8 +506,7 @@
   <div class="chat-head">
     <span class="h-dot"></span>
     <span class="h-title"><b>~/</b>agent.faq</span>
-    <span class="h-sub" data-i18n="chatSub">adk · gemini · cloud run</span>
-    <button class="h-close" id="chatClose" aria-label="Fermer le chat">✕</button>
+        <button class="h-close" id="chatClose" aria-label="Fermer le chat">✕</button>
   </div>
   <div class="chat-log" id="chatLog" aria-live="polite"></div>
   <form class="chat-input" id="chatForm">
@@ -599,7 +598,6 @@
     projMore: `More projects (dbt, streaming, data engineering) on GitHub ↗`,
     contactP: `Want to talk data, AI agents, or one of my projects? Email or LinkedIn are the best ways to reach me.`,
     contactLangs: `Languages: French (native) · English (professional)`,
-    chatSub: `adk · gemini · cloud run`,
     chatSend: `Send`
   };
 
@@ -729,8 +727,8 @@
     }
   ];
 
-  const FALLBACK_FR = "Mon cerveau LLM ne répond pas (mode secours scripté) et je n'ai pas cette réponse en stock 🙂 Réessayez dans un instant, écrivez à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Sinon, essayez une des questions ci-dessous.";
-  const FALLBACK_EN = "My LLM brain isn't responding (scripted fallback mode) and I don't have that answer in stock 🙂 Try again in a moment, write to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or reach out on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>. Otherwise, try one of the questions below.";
+  const FALLBACK_FR = "Mon cerveau LLM ne répond pas (mode secours scripté) et je n'ai pas cette réponse en stock 🙂 Réessayez dans un instant, écrivez à <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> ou sur <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>.";
+  const FALLBACK_EN = "My LLM brain isn't responding (scripted fallback mode) and I don't have that answer in stock 🙂 Try again in a moment, write to <a href='mailto:contact@amayas.dev'>contact@amayas.dev</a> or reach out on <a href='https://www.linkedin.com/in/amayas-mhd' target='_blank' rel='noopener'>LinkedIn</a>.";
 
   /* ---------- Traductions EN du FAQ ---------- */
   const FAQ_EN = {
@@ -832,6 +830,8 @@
 
   async function ask(text, forced){
     addMsg(text, "user");
+    const oldChips = log.querySelector(".chips");
+    if (oldChips) oldChips.remove();
     const typing = addMsg("…", "bot typing");
     const coldTimer = setTimeout(() => {
       typing.textContent = L() === "en" ? "waking up the server…" : "réveil du serveur…";
@@ -846,13 +846,12 @@
       el.textContent = reply;
       log.appendChild(el);
       log.scrollTop = log.scrollHeight;
-      addChips(null);
     } catch(e) {
       clearTimeout(coldTimer);
       typing.remove();
       const hit = forced || findAnswer(text);
-      if (hit) { addMsg(ans(hit), "bot"); addChips(hit.id); }
-      else { addMsg(FB(), "bot"); addChips(null); }
+      if (hit) { addMsg(ans(hit), "bot"); }
+      else { addMsg(FB(), "bot"); }
     }
   }
 
@@ -893,6 +892,7 @@
 
   fab.addEventListener("click", () => panel.classList.contains("open") ? closePanel() : openPanel());
   closeBtn.addEventListener("click", closePanel);
+  document.querySelector(".chat-head").addEventListener("click", closePanel);
   teaserOpen.addEventListener("click", openPanel);
   teaserClose.addEventListener("click", (e) => { e.stopPropagation(); stopTeaser(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.classList.contains("open")) closePanel(); });
@@ -923,7 +923,7 @@
 
   const TEASER_MSGS_FR = [
     "Une question sur le parcours, les projets ou la stack d'Amayas ? Posez-la moi.",
-    "Viens discuter 👋 Un vrai agent IA vous répond ici.",
+    "Venez discuter 👋 Un vrai agent IA vous répond ici.",
     "Curieux de savoir ce qu'Amayas construit avec Claude et les serveurs MCP ?",
     "Envie de parler data ou agents IA ? Demandez-moi comment le contacter.",
     "Psst, je connais ce portfolio par cœur. Testez-moi."
