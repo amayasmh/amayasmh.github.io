@@ -93,6 +93,12 @@
   .exp-item h3 { font-family:var(--display); font-weight:600; font-size:20px; margin:0; }
   .exp-item .co { color:var(--data); font-weight:500; }
   .exp-item .when { font-family:var(--mono); font-size:12px; color:var(--faint); margin-left:auto; white-space:nowrap; }
+  .exp-item details { margin-top:10px; }
+  .exp-item summary { cursor:pointer; font-family:var(--mono); font-size:12.5px; color:var(--data); list-style:none; display:inline-flex; align-items:center; gap:7px; user-select:none; }
+  .exp-item summary::-webkit-details-marker { display:none; }
+  .exp-item summary::before { content:"+"; color:var(--signal); font-size:14px; width:12px; }
+  .exp-item details[open] summary::before { content:"\2212"; }
+  .exp-item summary:hover { color:var(--ink); }
   .exp-item ul { margin:12px 0 0; padding-left:18px; color:#c8d4de; }
   .exp-item li { margin:6px 0; }
   @media (max-width:560px){ .exp-item .when { margin-left:0; width:100%; } }
@@ -115,6 +121,32 @@
   .proj-links a { font-family:var(--mono); font-size:13px; }
   .more-link { font-family:var(--mono); font-size:13px; }
   @media (max-width:560px){ .proj-body .row { grid-template-columns:1fr; gap:2px; } }
+
+  /* Études de cas */
+  .case { border:1px solid var(--line); border-radius:14px; background:var(--surface); overflow:hidden; margin-bottom:18px; }
+  .case-top { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--line-soft); }
+  .case-top .num { font-family:var(--mono); color:var(--signal); font-size:13px; }
+  .case-top h3 { font-family:var(--display); font-weight:600; font-size:21px; margin:4px 0 0; }
+  .case-top .where { font-family:var(--mono); font-size:11px; color:var(--faint); border:1px solid var(--line); border-radius:20px; padding:4px 11px; white-space:nowrap; }
+  .case-body { padding:20px 24px 24px; }
+  .case-body .row { display:grid; grid-template-columns:92px 1fr; gap:4px 18px; padding:9px 0; border-bottom:1px dashed var(--line-soft); }
+  .case-body .row:last-of-type { border-bottom:none; }
+  .case-body .k { font-family:var(--mono); font-size:12px; color:var(--faint); letter-spacing:.06em; text-transform:uppercase; padding-top:2px; }
+  .case-body .v { color:#c8d4de; }
+  .case-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 4px; }
+  .case-stat { background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:14px 14px 12px; }
+  .case-stat .n { font-family:var(--display); font-weight:600; font-size:26px; color:var(--signal); line-height:1.1; }
+  .case-stat .l { font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:6px; line-height:1.45; }
+  .case-note { font-family:var(--mono); font-size:11.5px; color:var(--faint); margin-top:16px; }
+  .case-schema { margin:10px 0 4px; }
+  .case-schema svg { width:100%; height:auto; display:block; }
+  .case-schema .cap { font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.08em; margin-top:8px; }
+  .case-steps { list-style:none; counter-reset:cs; display:grid; grid-template-columns:1fr; gap:14px; margin:6px 0 4px; padding:0; }
+  .case-steps li { counter-increment:cs; position:relative; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:14px 18px 14px 54px; font-size:14px; line-height:1.55; }
+  .case-steps li::before { content:counter(cs); position:absolute; left:16px; top:16px; width:22px; height:22px; border-radius:50%; border:1px solid var(--signal); color:var(--signal); font-family:var(--mono); font-size:11.5px; display:flex; align-items:center; justify-content:center; }
+  .case-steps b { display:block; color:var(--ink); font-weight:600; font-family:var(--display); font-size:16px; margin-bottom:4px; }
+  @media (max-width:820px){ .case-stats { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .case-body .row { grid-template-columns:1fr; gap:2px; } }
 
   /* Certifications */
   .certs { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
@@ -246,6 +278,7 @@
     <div class="nav-right">
       <nav class="nav-links">
         <a href="#about" data-i18n="navAbout">Approche</a>
+        <a href="#cases" data-i18n="navCases">Études de cas</a>
         <a href="#experience" data-i18n="navExp">Expérience</a>
         <a href="#projects" data-i18n="navProj">Projets</a>
         <a href="#stack">Stack</a>
@@ -300,43 +333,97 @@
     <p style="margin-top:16px;" data-i18n="aboutP2">Et parce qu'un outil n'a de valeur que s'il est adopté, j'accompagne <strong>les équipes métiers</strong> au quotidien : documentation claire, formation, itérations à partir de leurs retours. La preuve la plus concrète de cette approche : l'agent IA de ce portfolio, en production dans le widget en bas à droite.</p>
   </section>
 
+  <!-- ÉTUDES DE CAS -->
+  <section id="cases">
+    <div class="sec-head"><span class="idx">02</span><h2 data-i18n="casesH2">Études de cas</h2></div>
+
+    <article class="case">
+      <div class="case-top">
+        <div><span class="num">C.01</span><h3 data-i18n="case1Title">Agent de diagnostic autonome sur un pipeline critique</h3></div>
+        <span class="where">Agence 79 · MCP</span>
+      </div>
+      <div class="case-body" data-i18n="case1Body">
+        <div class="row"><span class="k">Contexte</span><span class="v">Un client stratégique dépend d'un workflow GCP orchestrant une dizaine de Cloud Functions (gen2) : consolidation des données, génération des visuels publicitaires et production des fichiers de feed pour plusieurs plateformes. 4 exécutions par jour, chaque run manqué retarde des campagnes en production.</span></div>
+        <div class="row"><span class="k">Problème</span><span class="v">Des incidents récurrents, diagnostiqués à la main : l'erreur remontée par le workflow n'est presque jamais la cause racine, et retrouver l'origine réelle dans les logs d'une dizaine de fonctions prenait jusqu'à une demi-journée par incident. Point critique mesuré : à la mise en production d'une évolution majeure du pipeline, 17 exécutions en échec consécutives, soit 5 jours sans aucune livraison.</span></div>
+        <div class="row"><span class="k">Démarche</span><div class="v">
+          <ol class="case-steps">
+            <li><b>Outiller.</b> Après la crise, construction d'un serveur MCP (6 outils) connectant Claude aux exécutions du workflow, aux logs et au code source des Cloud Functions. Les logs sont filtrés sur la fenêtre d'exécution en échec et par sévérité pour tenir dans le contexte, et chaque diagnostic doit citer les entrées de log qui le justifient.</li>
+            <li><b>Stabiliser.</b> Un mois de diagnostics outillés : 7 causes racines distinctes identifiées et corrigées, chacune confirmée par le correctif appliqué derrière. Le diagnostic passe d'une demi-journée à quelques minutes.</li>
+            <li><b>Industrialiser.</b> L'outil éprouvé, l'humain sort de la boucle de diagnostic : agent autonome déclenché par Pub/Sub uniquement en cas d'échec, aucun polling. Il remonte à la cause racine, propose un correctif et alerte l'équipe en moins de 5 minutes. Le correctif reste à la main de l'équipe, et l'agent tourne toujours en production.</li>
+          </ol>
+        </div></div>
+        <div class="row"><span class="k">Flux automatisé</span><div class="v">
+          <div class="case-schema" aria-hidden="true">
+            <svg viewBox="0 0 1000 96" xmlns="http://www.w3.org/2000/svg">
+              <path class="edge" d="M220,48 L280,48" /><path class="edge" d="M430,48 L490,48" /><path class="edge" d="M690,48 L750,48" />
+              <g><rect class="node-box" x="40" y="24" width="180" height="48" rx="9"/><text class="node-label" x="58" y="46">échec</text><text class="node-sub" x="58" y="60">workflow · 4x/jour</text></g>
+              <g><rect class="node-box" x="280" y="24" width="150" height="48" rx="9"/><text class="node-label" x="298" y="46">pub/sub</text><text class="node-sub" x="298" y="60">événement</text></g>
+              <g><rect class="node-box hot" x="490" y="24" width="200" height="48" rx="9"/><text class="node-label" x="508" y="46">agent</text><text class="node-sub" x="508" y="60">mcp · logs · code</text></g>
+              <g><rect class="node-box" x="750" y="24" width="210" height="48" rx="9"/><text class="node-label" x="768" y="46">diagnostic</text><text class="node-sub" x="768" y="60">alerte &lt; 5 min</text></g>
+            </svg>
+            <div class="cap">// de l'échec à l'alerte, cause racine identifiée, sans intervention humaine</div>
+          </div>
+        </div></div>
+        <div class="row"><span class="k">Résultats</span><div class="v">Depuis la stabilisation, sur 2 mois et demi de production :
+          <div class="case-stats">
+            <div class="case-stat"><div class="n">99%</div><div class="l">de succès sur 303 exécutions</div></div>
+            <div class="case-stat"><div class="n">0</div><div class="l">échec consécutif : chaque incident résolu avant le run suivant</div></div>
+            <div class="case-stat"><div class="n">&lt; 5 min</div><div class="l">par diagnostic, contre une demi-journée à la main</div></div>
+            <div class="case-stat"><div class="n">&lt; 1 €</div><div class="l">par mois : le coût suit la panne, pas le temps</div></div>
+          </div>
+        </div></div>
+        <div class="row"><span class="k">Portée</span><span class="v">Le dispositif a tourné sur un seul projet client pendant toute la période mesurée. L'agence a décidé de le généraliser à l'ensemble de ses projets.</span></div>
+        <div class="case-note">Détails anonymisés : le code et les données appartiennent à l'agence.</div>
+      </div>
+    </article>
+  </section>
+
   <!-- EXPERIENCE -->
   <section id="experience">
-    <div class="sec-head"><span class="idx">02</span><h2 data-i18n="expH2">Expérience</h2></div>
+    <div class="sec-head"><span class="idx">03</span><h2 data-i18n="expH2">Expérience</h2></div>
 
     <div class="exp-item">
       <div class="meta" data-i18n="exp1Meta"><h3>Data Engineer &amp; Agentic AI · <span class="co">Agence 79</span></h3><span class="when">Janv. 2026 → Aujourd'hui</span></div>
-      <ul data-i18n="exp1Ul">
+      <details>
+        <summary data-i18n="exp1More">détails</summary>
+        <ul data-i18n="exp1Ul">
         <li>Pipelines de données et workflows automatisés sur GCP, dédiés à l'automatisation des campagnes publicitaires clients.</li>
         <li>Optimisation de l'architecture BigQuery via dbt : modularisation, tests de qualité, gains de performance et réduction des coûts sur de gros volumes.</li>
         <li>Conception et déploiement d'agents IA autonomes en Python pour lancer et vérifier les campagnes, réduisant drastiquement le risque d'erreur humaine.</li>
         <li>Écosystème de serveurs MCP connectant Claude à des workflows, bases SQL et outils internes, automatisant les diagnostics complexes et l'exécution d'actions.</li>
         <li>Déploiement continu (GitLab CI/CD), documentation technique et accompagnement des équipes métiers à l'adoption des outils d'IA.</li>
       </ul>
+      </details>
     </div>
 
     <div class="exp-item">
       <div class="meta" data-i18n="exp2Meta"><h3>Data Engineer · <span class="co">Orange Business</span></h3><span class="when">Sept. 2022 → Déc. 2025</span></div>
-      <ul data-i18n="exp2Ul">
+      <details>
+        <summary data-i18n="exp2More">détails</summary>
+        <ul data-i18n="exp2Ul">
         <li>Pipelines de bout en bout pour prédire les délais de déploiement Fibre, intégrant des sources variées (API, bases SQL).</li>
         <li>Architectures Data Warehouse et modélisation de schémas analytiques garantissant qualité et fiabilité de la donnée.</li>
         <li>Orchestration automatisée des flux (Dataiku, SQL, Python) et bonnes pratiques CI/CD (Docker, Git) pour la supervision et la reproductibilité en production.</li>
         <li>Dashboards Power BI stratégiques et collaboration étroite avec les directions métiers pour transformer la donnée en insights actionnables.</li>
       </ul>
+      </details>
     </div>
 
     <div class="exp-item">
       <div class="meta" data-i18n="exp3Meta"><h3>Développeur automatisation · <span class="co">Orange Business</span> · Stage</h3><span class="when">Mars 2022 → Sept. 2022</span></div>
-      <ul data-i18n="exp3Ul">
+      <details>
+        <summary data-i18n="exp3More">détails</summary>
+        <ul data-i18n="exp3Ul">
         <li>Scripts Python / SQL et flux Dataiku pour la préparation, le nettoyage et la fiabilisation des jeux de données opérationnels.</li>
         <li>Première approche de la modélisation de données et de l'intégration de briques algorithmiques dans les workflows métier.</li>
       </ul>
+      </details>
     </div>
   </section>
 
   <!-- PROJETS PERSO -->
   <section id="projects">
-    <div class="sec-head"><span class="idx">03</span><h2 data-i18n="projH2">Projets open source</h2></div>
+    <div class="sec-head"><span class="idx">04</span><h2 data-i18n="projH2">Projets open source</h2></div>
 
     <article class="proj featured">
       <div class="proj-top">
@@ -369,7 +456,7 @@
 
   <!-- STACK -->
   <section id="stack">
-    <div class="sec-head"><span class="idx">04</span><h2>Stack</h2></div>
+    <div class="sec-head"><span class="idx">05</span><h2>Stack</h2></div>
     <div class="stack-grid">
       <div class="panel"><h3 data-i18n="stackProd">En production · Agence 79</h3><div class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Pandas</span><span class="tag">GCP</span><span class="tag">BigQuery</span><span class="tag">dbt</span><span class="tag">Cloud Workflows</span><span class="tag">Docker</span><span class="tag">Git</span><span class="tag">GitLab</span><span class="tag">Serveurs MCP</span><span class="tag">Claude (Anthropic)</span><span class="tag">Google ADK</span><span class="tag">Agent Platform (Vertex AI)</span></div></div>
       <div class="panel"><h3 data-i18n="stackTools">Aussi dans ma boîte à outils</h3><div class="tags"><span class="tag">PySpark</span><span class="tag">Spark</span><span class="tag">Kafka</span><span class="tag">Hadoop / HDFS</span><span class="tag">Scala</span><span class="tag">Dataiku</span><span class="tag">Airflow</span><span class="tag">Azure</span><span class="tag">Snowflake</span><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">Elasticsearch</span><span class="tag">NLP</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">GitHub</span><span class="tag">Ansible</span></div></div>
@@ -379,7 +466,7 @@
 
   <!-- CONTACT -->
   <section id="contact" class="contact">
-    <div class="sec-head"><span class="idx">05</span><h2>Contact</h2></div>
+    <div class="sec-head"><span class="idx">06</span><h2>Contact</h2></div>
     <p data-i18n="contactP">Envie d'échanger sur la data, les agents IA ou l'un de mes projets ? Le mail ou LinkedIn sont les meilleures portes d'entrée.</p>
     <div class="links">
       <a href="mailto:contact@amayas.dev">contact@amayas.dev</a>
@@ -434,6 +521,10 @@
     navAbout: `Approach`,
     navExp: `Experience`,
     navProj: `Projects`,
+    navCases: `Case studies`,
+    exp1More: `details`,
+    exp2More: `details`,
+    exp3More: `details`,
     eyebrow: `<span class="dot"></span>Data Engineer &amp; Agentic AI · Paris region, France`,
     heroH1: `I build reliable systems where <em>AI agents</em> meet enterprise data.`,
     heroLede: `Data engineer specializing in production-grade pipelines and cloud data warehouse modeling on GCP. Today, I deploy autonomous agents and MCP servers that connect Claude to workflows, SQL databases and internal tools, from ingestion all the way to production.`,
@@ -459,6 +550,39 @@
     exp3Meta: `<h3>Automation Developer · <span class="co">Orange Business</span> · Internship</h3><span class="when">Mar. 2022 → Sep. 2022</span>`,
     exp3Ul: `<li>Python / SQL scripts and Dataiku flows to prepare, clean and improve the reliability of operational datasets.</li>
         <li>First hands-on experience with data modeling and integrating algorithmic components into business workflows.</li>`,
+    casesH2: `Case studies`,
+    case1Title: `Autonomous diagnostic agent on a critical pipeline`,
+    case1Body: `<div class="row"><span class="k">Context</span><span class="v">A strategic client relies on a GCP workflow orchestrating about ten Cloud Functions (gen2): data consolidation, ad visual generation and feed file production for several platforms. 4 runs a day, and every missed run delays live campaigns.</span></div>
+        <div class="row"><span class="k">Problem</span><span class="v">Recurring incidents, diagnosed by hand: the error surfaced by the workflow is almost never the root cause, and tracing the real origin through the logs of about ten functions took up to half a day per incident. Measured critical point: when a major evolution of the pipeline went live, 17 consecutive failed runs, meaning 5 days without a single delivery.</span></div>
+        <div class="row"><span class="k">Approach</span><div class="v">
+          <ol class="case-steps">
+            <li><b>Tool up.</b> After the crisis, built an MCP server (6 tools) connecting Claude to workflow executions, logs and the source code of the Cloud Functions. Logs are filtered to the failing execution window and by severity to fit the context, and every diagnosis must cite the log entries that support it.</li>
+            <li><b>Stabilize.</b> One month of tool-assisted diagnoses: 7 distinct root causes identified and fixed, each confirmed by the fix applied afterwards. Diagnosis went from half a day to a few minutes.</li>
+            <li><b>Industrialize.</b> With the tool proven, the human leaves the diagnosis loop: an autonomous agent triggered by Pub/Sub only on failure, no polling. It walks back to the root cause, proposes a fix and alerts the team within 5 minutes. Applying the fix stays in the team's hands, and the agent is still running in production.</li>
+          </ol>
+        </div></div>
+        <div class="row"><span class="k">Automated flow</span><div class="v">
+          <div class="case-schema" aria-hidden="true">
+            <svg viewBox="0 0 1000 96" xmlns="http://www.w3.org/2000/svg">
+              <path class="edge" d="M220,48 L280,48" /><path class="edge" d="M430,48 L490,48" /><path class="edge" d="M690,48 L750,48" />
+              <g><rect class="node-box" x="40" y="24" width="180" height="48" rx="9"/><text class="node-label" x="58" y="46">failure</text><text class="node-sub" x="58" y="60">workflow · 4x/day</text></g>
+              <g><rect class="node-box" x="280" y="24" width="150" height="48" rx="9"/><text class="node-label" x="298" y="46">pub/sub</text><text class="node-sub" x="298" y="60">event-driven</text></g>
+              <g><rect class="node-box hot" x="490" y="24" width="200" height="48" rx="9"/><text class="node-label" x="508" y="46">agent</text><text class="node-sub" x="508" y="60">mcp · logs · code</text></g>
+              <g><rect class="node-box" x="750" y="24" width="210" height="48" rx="9"/><text class="node-label" x="768" y="46">diagnostic</text><text class="node-sub" x="768" y="60">alert &lt; 5 min</text></g>
+            </svg>
+            <div class="cap">// from failure to alert, root cause identified, no human in the loop</div>
+          </div>
+        </div></div>
+        <div class="row"><span class="k">Results</span><div class="v">Since stabilization, over 2.5 months in production:
+          <div class="case-stats">
+            <div class="case-stat"><div class="n">99%</div><div class="l">success rate over 303 runs</div></div>
+            <div class="case-stat"><div class="n">0</div><div class="l">consecutive failures: every incident resolved before the next run</div></div>
+            <div class="case-stat"><div class="n">&lt; 5 min</div><div class="l">per diagnosis, versus half a day by hand</div></div>
+            <div class="case-stat"><div class="n">&lt; €1</div><div class="l">per month: cost follows failures, not time</div></div>
+          </div>
+        </div></div>
+        <div class="row"><span class="k">Scope</span><span class="v">The system ran on a single client project throughout the measured period. The agency has decided to roll it out across all of its projects.</span></div>
+        <div class="case-note">Details anonymized: code and data belong to the agency.</div>`,
     projH2: `Open source projects`,
     projAgentBody: `<div class="row"><span class="k">Goal</span><span class="v">This portfolio's conversational agent: the one answering you in the widget at the bottom right. A real LLM agent in production, that any visitor can test (and try to trick).</span></div>
         <div class="row"><span class="k">Approach</span><span class="v">Google ADK agent (Gemini) exposed through a FastAPI service on Cloud Run (scale-to-zero): restricted CORS, rate limiting, model cascade on quota exhaustion, live GitHub tool, and a scripted fallback in the widget. Guardrails tested against prompt injections. The system prompt is public by design.</span></div>
